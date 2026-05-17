@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>釜산 4 Days · 廣安大橋下的賞楓之旅 | 2026.10.23 – 10.27</title>
+<meta name="description" content="2026 年 10 月底釜山 4 天 3 完整天悠閒行程：海雲台 Sky Capsule、廣安里無人機秀、影島海女村、甘川洞、松島纜車、Spa Land 汗蒸幕，含互動式路線地圖。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+  :root {
+    --c-maple: #C9472B;
+    --c-maple-deep: #8B2E1B;
+    --c-ginkgo: #E8B547;
+    --c-ocean: #1F4E6B;
+    --c-mist: #FAF5EC;
+    --c-paper: #FFFBF3;
+    --c-ink: #2A2522;
+    --c-ink-soft: #6B5F55;
+    --c-line: #E8DECB;
+    --shadow-soft: 0 2px 12px rgba(42, 37, 34, 0.06);
+    --shadow-card: 0 8px 32px rgba(42, 37, 34, 0.08);
+    --day-0: #8B7355;
+    --day-1: #D7634A;
+    --day-2: #2D8C8A;
+    --day-3: #E8B547;
+    --day-4: #5C7C9A;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--c-mist);
+    color: var(--c-ink);
+    line-height: 1.7;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: "Noto Serif TC", serif;
+    font-weight: 700;
+    color: var(--c-ink);
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+
+  /* ===== Top Nav ===== */
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 251, 243, 0.92);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--c-line);
+  }
+  .topnav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .topnav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "Noto Serif TC", serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--c-maple-deep);
+  }
+  .topnav-brand .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--c-maple);
+    box-shadow: 0 0 0 4px rgba(201, 71, 43, 0.15);
+  }
+  .topnav-links {
+    display: flex;
+    gap: 4px;
+    font-size: 14px;
+  }
+  .topnav-links a {
+    color: var(--c-ink-soft);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    transition: all .2s;
+  }
+  .topnav-links a:hover {
+    background: rgba(201, 71, 43, 0.08);
+    color: var(--c-maple-deep);
+  }
+  @media (max-width: 720px) {
+    .topnav-links { display: none; }
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    position: relative;
+    padding: 80px 24px 100px;
+    background:
+      radial-gradient(ellipse at top left, rgba(232, 181, 71, 0.18), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(201, 71, 43, 0.14), transparent 55%),
+      linear-gradient(180deg, var(--c-mist) 0%, var(--c-paper) 100%);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 20%; right: -100px;
+    width: 380px; height: 380px;
+    background: radial-gradient(circle, rgba(201, 71, 43, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "Caveat", cursive;
+    font-size: 24px;
+    color: var(--c-maple);
+    margin-bottom: 18px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: "";
+    width: 32px;
+    height: 1px;
+    background: var(--c-maple);
+    opacity: 0.5;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 64px);
+    line-height: 1.15;
+    margin-bottom: 24px;
+    font-weight: 900;
+  }
+  .hero h1 .accent {
+    color: var(--c-maple);
+    position: relative;
+  }
+  .hero h1 .accent::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -6px;
+    height: 8px;
+    background: var(--c-ginkgo);
+    opacity: 0.4;
+    border-radius: 4px;
+    z-index: -1;
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: var(--c-ink-soft);
+    max-width: 640px;
+    margin-bottom: 36px;
+  }
+  .hero-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 12px;
+    max-width: 880px;
+  }
+  .meta-card {
+    background: white;
+    padding: 18px 20px;
+    border-radius: 14px;
+    border: 1px solid var(--c-line);
+    box-shadow: var(--shadow-soft);
+  }
+  .meta-card-label {
+    font-size: 12px;
+    color: var(--c-ink-soft);
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .meta-card-value {
+    font-family: "Noto Serif TC", serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--c-ink);
+  }
+  .meta-card-value small {
+    display: block;
+    font-family: "Noto Sans TC", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--c-ink-soft);
+    margin-top: 2px;
+  }
+
+  /* ===== Sections ===== */
+  section { padding: 70px 24px; }
+  .section-inner { max-width: 1280px; margin: 0 auto; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .section-tag {
+    font-family: "Caveat", cursive;
+    font-size: 22px;
+    color: var(--c-maple);
+  }
+  .section-head h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    flex: 1;
+    min-width: 200px;
+  }
+  .section-head p {
+    color: var(--c-ink-soft);
+    font-size: 15px;
+    margin: 0;
+    flex-basis: 100%;
+  }
+
+  /* ===== Map ===== */
+  .map-section {
+    background: var(--c-paper);
+    border-top: 1px solid var(--c-line);
+    border-bottom: 1px solid var(--c-line);
+  }
+  .map-wrap {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--c-line);
+    box-shadow: var(--shadow-card);
+  }
+  .map-toolbar {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--c-line);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    background: linear-gradient(180deg, #fff 0%, #FFFCF5 100%);
+  }
+  .day-chip {
+    padding: 8px 16px;
+    border-radius: 22px;
+    border: 1px solid var(--c-line);
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--c-ink-soft);
+    transition: all .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+  }
+  .day-chip:hover { transform: translateY(-1px); box-shadow: var(--shadow-soft); }
+  .day-chip .swatch {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: currentColor;
+  }
+  .day-chip.active {
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  }
+  .day-chip[data-day="all"].active { background: var(--c-ink); }
+  .day-chip[data-day="0"].active { background: var(--day-0); }
+  .day-chip[data-day="1"].active { background: var(--day-1); }
+  .day-chip[data-day="2"].active { background: var(--day-2); }
+  .day-chip[data-day="3"].active { background: var(--day-3); color: var(--c-ink); }
+  .day-chip[data-day="4"].active { background: var(--day-4); }
+
+  #map {
+    height: 620px;
+    width: 100%;
+  }
+  @media (max-width: 720px) {
+    #map { height: 460px; }
+  }
+  .map-legend {
+    padding: 14px 20px;
+    border-top: 1px solid var(--c-line);
+    background: #FFFCF5;
+    font-size: 13px;
+    color: var(--c-ink-soft);
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .map-legend strong { color: var(--c-ink); font-weight: 500; }
+  .legend-item { display: inline-flex; align-items: center; gap: 6px; }
+  .legend-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+    display: inline-block;
+  }
+  /* Custom Leaflet markers */
+  .stop-marker {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 17px;
+    font-family: "Noto Serif TC", -apple-system, "Apple Color Emoji", sans-serif;
+    border: 3px solid white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.28);
+    transition: transform 0.15s ease;
+  }
+  .stop-marker:hover { transform: scale(1.12); }
+  .stop-marker.day-0 { background: var(--day-0); }
+  .stop-marker.day-1 { background: var(--day-1); }
+  .stop-marker.day-2 { background: var(--day-2); }
+  .stop-marker.day-3 { background: var(--day-3); color: var(--c-ink); }
+  .stop-marker.day-4 { background: var(--day-4); }
+  /* Extra (secondary) markers — small dots for sub-spots, no number, no line */
+  .extra-marker {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.30);
+    opacity: 0.92;
+    transition: transform 0.15s ease;
+    cursor: pointer;
+  }
+  .extra-marker:hover { transform: scale(1.5); }
+  .extra-marker.day-0 { background: var(--day-0); }
+  .extra-marker.day-1 { background: var(--day-1); }
+  .extra-marker.day-2 { background: var(--day-2); }
+  .extra-marker.day-3 { background: var(--day-3); }
+  .extra-marker.day-4 { background: var(--day-4); }
+  /* Home base (hotel) marker */
+  .base-marker {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--c-maple-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 4px 16px rgba(139, 46, 27, 0.35),
+                0 0 0 6px rgba(201, 71, 43, 0.12);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .base-marker:hover { transform: scale(1.1); }
+  /* Popup */
+  .leaflet-popup-content-wrapper {
+    border-radius: 14px;
+    font-family: "Noto Sans TC", sans-serif;
+    box-shadow: 0 8px 24px rgba(42,37,34,0.18);
+  }
+  .leaflet-popup-content { margin: 14px 16px; min-width: 200px; }
+  .popup-time {
+    font-family: "Caveat", cursive;
+    font-size: 18px;
+    color: var(--c-maple);
+    margin-bottom: 2px;
+  }
+  .popup-name {
+    font-family: "Noto Serif TC", serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--c-ink);
+    margin-bottom: 4px;
+  }
+  .popup-tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(201, 71, 43, 0.12);
+    color: var(--c-maple-deep);
+    margin-bottom: 6px;
+    margin-right: 4px;
+  }
+  .popup-tag.food { background: rgba(232, 181, 71, 0.20); color: #8b6a17; }
+  .popup-tag.transport { background: rgba(31, 78, 107, 0.12); color: var(--c-ocean); }
+  .popup-tag.view { background: rgba(45, 140, 138, 0.15); color: #1f6b69; }
+  .popup-tag.extra { background: rgba(107, 95, 85, 0.15); color: var(--c-ink-soft); font-family: "Caveat", cursive; font-size: 14px; }
+  .popup-transport {
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 13px;
+    color: var(--c-ocean);
+    background: rgba(31, 78, 107, 0.08);
+    padding: 6px 10px;
+    border-radius: 8px;
+    margin: 6px 0;
+    font-weight: 500;
+  }
+  .popup-gmaps {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 10px;
+    padding: 6px 12px;
+    background: var(--c-maple);
+    color: white !important;
+    border-radius: 16px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .popup-gmaps:hover {
+    background: var(--c-maple-deep);
+    transform: translateY(-1px);
+    color: white !important;
+  }
+  .popup-desc { font-size: 13px; color: var(--c-ink-soft); line-height: 1.5; }
+
+  /* ===== Day Cards ===== */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .day-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--c-line);
+    box-shadow: var(--shadow-card);
+    scroll-margin-top: 80px;
+  }
+  .day-header {
+    padding: 24px 28px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .day-card[data-day="0"] .day-header { background: linear-gradient(135deg, #8B7355 0%, #6B5944 100%); }
+  .day-card[data-day="1"] .day-header { background: linear-gradient(135deg, #D7634A 0%, #B14B33 100%); }
+  .day-card[data-day="2"] .day-header { background: linear-gradient(135deg, #2D8C8A 0%, #1F6B69 100%); }
+  .day-card[data-day="3"] .day-header { background: linear-gradient(135deg, #E8B547 0%, #C9933A 100%); color: #3D2D0F; }
+  .day-card[data-day="4"] .day-header { background: linear-gradient(135deg, #5C7C9A 0%, #3F5C75 100%); }
+  .day-header::after {
+    content: "";
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+  }
+  .day-header-meta {
+    font-family: "Caveat", cursive;
+    font-size: 22px;
+    opacity: 0.85;
+    margin-bottom: 4px;
+  }
+  .day-header h3 {
+    font-size: clamp(22px, 3vw, 30px);
+    color: inherit;
+    margin-bottom: 6px;
+  }
+  .day-header-sub {
+    font-size: 14px;
+    opacity: 0.9;
+  }
+  .day-body {
+    padding: 14px 28px 28px;
+  }
+  .stops {
+    display: flex;
+    flex-direction: column;
+  }
+  .stop {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px dashed var(--c-line);
+    position: relative;
+  }
+  .stop:last-child { border-bottom: none; }
+  .stop-time {
+    font-family: "Noto Serif TC", serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--c-maple-deep);
+    line-height: 1.4;
+    padding-top: 2px;
+  }
+  .stop-time small {
+    display: block;
+    font-family: "Noto Sans TC", sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    color: var(--c-ink-soft);
+    letter-spacing: 0.08em;
+  }
+  .stop-body { min-width: 0; }
+  .stop-name {
+    font-family: "Noto Serif TC", serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--c-ink);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .stop-badges {
+    display: inline-flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(201, 71, 43, 0.10);
+    color: var(--c-maple-deep);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+  .badge.food { background: rgba(232, 181, 71, 0.20); color: #8b6a17; }
+  .badge.transport { background: rgba(31, 78, 107, 0.12); color: var(--c-ocean); }
+  .badge.must { background: var(--c-maple); color: white; }
+  .stop-desc {
+    font-size: 14px;
+    color: var(--c-ink-soft);
+    line-height: 1.6;
+  }
+  .stop-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--c-ink-soft);
+  }
+  .stop-meta a {
+    color: var(--c-maple);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--c-maple);
+  }
+  .stop-meta a:hover { color: var(--c-maple-deep); }
+  /* Inline transport-mode icon next to stop name */
+  .stop-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    color: white;
+    font-size: 14px;
+    margin-right: 6px;
+    flex-shrink: 0;
+    border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  }
+  .stop-icon.day-0 { background: var(--day-0); }
+  .stop-icon.day-1 { background: var(--day-1); }
+  .stop-icon.day-2 { background: var(--day-2); }
+  .stop-icon.day-3 { background: var(--day-3); color: var(--c-ink); }
+  .stop-icon.day-4 { background: var(--day-4); }
+  /* Transport summary bar under stop name */
+  .stop-transport {
+    display: inline-block;
+    margin: 6px 0 8px;
+    padding: 6px 12px;
+    background: rgba(31, 78, 107, 0.08);
+    color: var(--c-ocean);
+    border-left: 3px solid var(--c-ocean);
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  /* Sub-spots (extras) chips inline in timeline cards */
+  .stop-extras {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: var(--c-mist);
+    border-radius: 10px;
+  }
+  .stop-extras-label {
+    font-size: 12px;
+    color: var(--c-ink-soft);
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+  .extra-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px 4px 8px;
+    background: white;
+    border: 1px solid var(--c-line);
+    border-radius: 14px;
+    font-size: 12px;
+    color: var(--c-ink);
+    text-decoration: none;
+    margin: 3px 4px 3px 0;
+    transition: all 0.15s ease;
+  }
+  .extra-chip:hover {
+    border-color: var(--c-maple);
+    color: var(--c-maple-deep);
+    transform: translateY(-1px);
+  }
+  .extra-chip-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    border: 1.5px solid white;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+  }
+  .extra-chip-dot.day-0 { background: var(--day-0); }
+  .extra-chip-dot.day-1 { background: var(--day-1); }
+  .extra-chip-dot.day-2 { background: var(--day-2); }
+  .extra-chip-dot.day-3 { background: var(--day-3); }
+  .extra-chip-dot.day-4 { background: var(--day-4); }
+  @media (max-width: 600px) {
+    .stop { grid-template-columns: 60px 1fr; gap: 14px; }
+    .stop-time { font-size: 15px; }
+    .day-body { padding: 8px 20px 24px; }
+  }
+
+  /* ===== Checklist ===== */
+  .checklist-section {
+    background: linear-gradient(180deg, var(--c-mist) 0%, var(--c-paper) 100%);
+  }
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  .checklist-card {
+    background: white;
+    padding: 22px 24px;
+    border-radius: 14px;
+    border: 1px solid var(--c-line);
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .checklist-when {
+    font-family: "Caveat", cursive;
+    font-size: 20px;
+    color: var(--c-maple);
+  }
+  .checklist-card h4 {
+    font-size: 17px;
+    margin-bottom: 4px;
+  }
+  .checklist-card p {
+    font-size: 13px;
+    color: var(--c-ink-soft);
+    margin: 0;
+  }
+  .checklist-card a {
+    font-size: 13px;
+    color: var(--c-maple);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--c-maple);
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+
+  /* ===== Stats ===== */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .stat-card {
+    background: white;
+    padding: 22px 20px;
+    border-radius: 14px;
+    border: 1px solid var(--c-line);
+    text-align: center;
+  }
+  .stat-num {
+    font-family: "Noto Serif TC", serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: var(--c-maple);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: var(--c-ink-soft);
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    padding: 40px 24px;
+    text-align: center;
+    background: var(--c-paper);
+    border-top: 1px solid var(--c-line);
+    color: var(--c-ink-soft);
+    font-size: 13px;
+  }
+  footer .heart { color: var(--c-maple); }
+
+  /* Smooth fade-in */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.6s ease-out backwards; }
+
+  .pulse-dot {
+    position: relative;
+  }
+  .pulse-dot::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.3;
+    animation: pulse 2s ease-out infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0.4; }
+    100% { transform: scale(2); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP NAV ============ -->
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="#top" class="topnav-brand">
+      <span class="dot"></span>
+      <span>釜山 4 Days · 2026 秋</span>
+    </a>
+    <div class="topnav-links">
+      <a href="#map">路線地圖</a>
+      <a href="#day-0">10/23</a>
+      <a href="#day-1">10/24</a>
+      <a href="#day-2">10/25</a>
+      <a href="#day-3">10/26</a>
+      <a href="#day-4">10/27</a>
+      <a href="#checklist">行前清單</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Busan · 2026 Autumn</div>
+    <h1>
+      在 <span class="accent">廣安大橋</span><br/>
+      看一場秋天的<br/>
+      無人機煙火秀
+    </h1>
+    <p class="hero-sub">
+      10 月底剛好是釜山賞楓全盛期。從金海機場落地的那一刻起，4 天 3 完整玩日，把海雲台 Sky Capsule、影島海女村、甘川洞、松島水晶纜車、Spa Land 汗蒸幕、和每週六限定的廣安里無人機秀，都安排在剛剛好的節奏裡。
+    </p>
+
+    <div class="hero-meta">
+      <div class="meta-card">
+        <div class="meta-card-label">DATES</div>
+        <div class="meta-card-value">10.23 – 10.27<small>4 晚 · 3 完整天</small></div>
+      </div>
+      <div class="meta-card">
+        <div class="meta-card-label">FLIGHT</div>
+        <div class="meta-card-value">Scoot IT 606<small>桃園 16:40 → 釜山 19:55</small></div>
+      </div>
+      <div class="meta-card">
+        <div class="meta-card-label">BASE</div>
+        <div class="meta-card-value">Ocean The Point<small>廣안리海景 7–10F · ×4 晚</small></div>
+      </div>
+      <div class="meta-card">
+        <div class="meta-card-label">NEXT STOP</div>
+        <div class="meta-card-value">KTX → 首爾<small>10/27 早班</small></div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-num">6</div>
+        <div class="stat-label">必玩主題收集 ✓</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">12+</div>
+        <div class="stat-label">在地美食點名</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">列車／纜車體驗</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">🍁</div>
+        <div class="stat-label">釜山賞楓全盛期</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ INTERACTIVE MAP ============ -->
+<section class="map-section" id="map-section">
+  <div class="section-inner">
+    <div class="section-head">
+      <div style="flex-basis:100%">
+        <div class="section-tag">Route Map</div>
+        <h2>4 天移動路線一張看</h2>
+      </div>
+      <p>點上方標籤切換每日路線。點地圖標記看時間、美食、交通方式。動線箭頭按順序連起每一站。</p>
+    </div>
+
+    <div class="map-wrap">
+      <div class="map-toolbar" id="map-toolbar">
+        <button class="day-chip active" data-day="all">
+          <span class="swatch" style="background:var(--c-ink)"></span>全部
+        </button>
+        <button class="day-chip" data-day="0">
+          <span class="swatch" style="background:var(--day-0)"></span>10/23 抵達
+        </button>
+        <button class="day-chip" data-day="1">
+          <span class="swatch" style="background:var(--day-1)"></span>10/24 海雲台 + 無人機
+        </button>
+        <button class="day-chip" data-day="2">
+          <span class="swatch" style="background:var(--day-2)"></span>10/25 影島海女
+        </button>
+        <button class="day-chip" data-day="3">
+          <span class="swatch" style="background:var(--day-3)"></span>10/26 甘川 + 松島 + Spa
+        </button>
+        <button class="day-chip" data-day="4">
+          <span class="swatch" style="background:var(--day-4)"></span>10/27 KTX 走
+        </button>
+      </div>
+      <div id="map"></div>
+      <div class="map-legend">
+        <span class="legend-item">🏨 <strong>Home Base</strong>＝Ocean The Point Hotel（每日起點 / 終點）</span>
+        <span class="legend-item"><span class="legend-dot" style="background:var(--day-1);width:18px;height:18px"></span><strong>大圓 + 交通圖示</strong>＝該段如何到達（🚕 Uber / 🚞 列車 / 🚄 KTX）+ 摘要</span>
+        <span class="legend-item">➜ 連線＝實際移動方向</span>
+        <span class="legend-item"><span class="legend-dot" style="background:var(--day-1);width:10px;height:10px;opacity:0.92"></span><strong>小圓點</strong>＝周邊景點 / 餐廳，附 Google Maps 連結</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section id="timeline-section">
+  <div class="section-inner">
+    <div class="section-head">
+      <div style="flex-basis:100%">
+        <div class="section-tag">Itinerary</div>
+        <h2>每日完整行程</h2>
+      </div>
+      <p>含交通方式、預估 Uber 車資、訂位提醒、必吃在地名店。</p>
+    </div>
+
+    <div class="timeline" id="timeline"></div>
+  </div>
+</section>
+
+<!-- ============ CHECKLIST ============ -->
+<section class="checklist-section" id="checklist">
+  <div class="section-inner">
+    <div class="section-head">
+      <div style="flex-basis:100%">
+        <div class="section-tag">Pre-Trip</div>
+        <h2>行前必做清單</h2>
+      </div>
+      <p>有些東西不訂沒得搭，有些 App 不裝會崩潰。出發前一週把這 6 件事做完。</p>
+    </div>
+    <div class="checklist-grid">
+      <div class="checklist-card">
+        <div class="checklist-when">行前 1 個月</div>
+        <h4>🚄 KTX 預訂</h4>
+        <p>10/27 釜山 → 首爾，9:00–10:30 早班最舒服。週末/連假班次最早 1 個月開賣，越早越好。</p>
+        <a href="https://www.letskorail.com/" target="_blank" rel="noopener">KORAIL 中文官網 →</a>
+      </div>
+      <div class="checklist-card">
+        <div class="checklist-when">行前 1 週</div>
+        <h4>🚞 Sky Capsule 預訂</h4>
+        <p>10/24（六）10:00–11:00 場，方向選 尾浦 → 青沙浦（看海角度最美）。週末旺季常售完。</p>
+        <a href="https://www.bluelinepark.com/eng/" target="_blank" rel="noopener">Blueline Park 官網 →</a>
+      </div>
+      <div class="checklist-card">
+        <div class="checklist-when">行前 3 天</div>
+        <h4>📱 叫車 App 雙保險</h4>
+        <p>Uber 用台灣同帳號即可（市區範圍 OK）。Kakao T 用台灣門號註冊備用（出郊區時較好叫車）。</p>
+      </div>
+      <div class="checklist-card">
+        <div class="checklist-when">行前 1 天</div>
+        <h4>💳 海外信用卡 / Wowpass</h4>
+        <p>韓國許多店家可刷海外卡，但傳統市場、汗蒸幕、街邊攤要現金或 T-money。建議辦 Wowpass 一卡通搞定。</p>
+      </div>
+      <div class="checklist-card">
+        <div class="checklist-when">10/24 當天</div>
+        <h4>🚁 確認無人機秀</h4>
+        <p>下午上官網確認晚上 21:00 場有沒有取消（風大會延期）。每場 10–12 分鐘，廣安里海邊起飛。</p>
+        <a href="https://www.gwangallimdrone.co.kr/" target="_blank" rel="noopener">廣安里 M Drone 官網 →</a>
+      </div>
+      <div class="checklist-card">
+        <div class="checklist-when">隨身</div>
+        <h4>🍁 10 月底穿搭</h4>
+        <p>白天 18–22°C，晚上 12–15°C。薄長袖＋風衣／薄大衣最剛好。看夕陽/夜景時很涼，記得多帶一件。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div>釜山 4 天行程 · 廣安大橋下的秋日散策 · 2026.10.23 – 10.27</div>
+  <div style="margin-top:6px; font-size:12px;">Made with <span class="heart">♡</span> · 互動地圖 by Leaflet & OpenStreetMap</div>
+</footer>
+
+<!-- ============ DATA + MAP SCRIPT ============ -->
+<script>
+const TRIP = [
+  {
+    day: 0,
+    date: "10/23 (五)",
+    title: "抵達日 · Uber 進廣안里 + 稻草烤肋排",
+    sub: "Scoot IT 606 落地 → Uber 45 min → 廣안里晚餐",
+    stops: [
+      {
+        time: "19:55",
+        icon: "✈",
+        name: "Scoot IT 606 抵達金海機場",
+        transport: "✈ 桃園 16:40 → 釜山 19:55（飛行約 2h15m）",
+        lat: 35.1796, lng: 128.9384,
+        gmaps: "https://www.google.com/maps/search/?api=1&query=35.1796,128.9384",
+        badge: "transport",
+        desc: "出機場前先確認 Uber App 可用（用台灣同一個帳號）。提行李＋入境約 30–45 分鐘。"
+      },
+      {
+        time: "20:30 – 23:30",
+        icon: "🍖",
+        name: "Uber 抵達廣안리 + 고결 稻草烤肋排晚餐",
+        transport: "🚕 Uber 從金海機場到 Ocean The Point Hotel · 45 min · ₩25-30k（≈ NT$600）",
+        lat: 35.1513254, lng: 129.1154937,
+        gmaps: "https://maps.app.goo.gl/Zi39QEsP4ShDHN7R7",
+        badge: "food",
+        desc: "21:30 抵達 Ocean The Point Hotel check-in → 海邊散步看廣안大橋夜燈（整點 +10 分有點燈動畫）→ 走 5 分鐘到 <strong>고결 廣안里稻草烤肋排</strong>吃 짚불삼겹살（稻草烤五花肉）+ 우대갈비（厚切牛肋骨）做收尾，營業到 24:00。"
+      }
+    ],
+    extras: [
+      {
+        name: "水營本家豬肉湯飯（西面 · 24h）",
+        lat: 35.1559205, lng: 129.0584735,
+        gmaps: "https://maps.app.goo.gl/cK366Fg1D1DGBzw46",
+        badge: "food",
+        desc: "24 小時營業，湯頭乾淨溫潤。位於西面（距飯店 3 km，Uber 約 ₩10k）。可挪到 Day 2 西面 83 해치烤肉後當宵夜，或單獨來吃。"
+      }
+    ]
+  },
+  {
+    day: 1,
+    date: "10/24 (六)",
+    title: "海雲台列車日 + 廣안里無人機秀",
+    sub: "Sky Capsule × Beach Train × M Drone Light Show",
+    route: [
+      [35.15389, 129.11856],
+      [35.158284, 129.1727672],
+      [35.1613733, 129.1918758],
+      [35.158284, 129.1727672],
+      [35.1586975, 129.1603842],
+      [35.1555583, 129.1238321],
+      [35.15389, 129.11856]
+    ],
+    stops: [
+      {
+        time: "10:30 – 13:30",
+        icon: "🚕",
+        name: "飯店 → 海雲台·尾浦站 · Uber 20 min · ₩9-12k",
+        transport: "🚕 廣안里飯店 → 海雲台藍線公園 尾浦站",
+        lat: 35.158284, lng: 129.1727672,
+        gmaps: "https://maps.app.goo.gl/ySQbNS4zr25xBbqC9",
+        badge: "must",
+        desc: "10:30 搭 <strong>Sky Capsule</strong>（空中列車✓，提早一週訂位）30 分鐘膠囊列車到青沙浦。下車走 <strong>紅白燈塔 + Daritdol 玻璃步道</strong>。午餐 <strong>古來思魚糕海雲台店</strong>現做魚糕串、或 <strong>Cafe Rooftop</strong>頂樓海景咖啡。"
+      },
+      {
+        time: "14:00 – 17:30",
+        icon: "🚞",
+        name: "青沙浦 → 海雲台沙灘 · Beach Train 30 min · ₩7k",
+        transport: "🚞 Beach Train 海邊列車（青沙浦 → 尾浦）",
+        lat: 35.1586975, lng: 129.1603842,
+        gmaps: "https://maps.app.goo.gl/zUWXrSrdrkVXA5Yu9",
+        badge: "must",
+        desc: "<strong>Beach Train</strong>（海邊列車✓）開放式車廂沿海岸線慢晃 30 分。下車散步 <strong>海雲台沙灘 + 冬柏島</strong>環島（APEC 之家、海邊岩石）。16:30 上 <strong>X the SKY 98F 觀景台</strong>（411 m）看夕陽中的廣安大橋。"
+      },
+      {
+        time: "19:00 – 22:00",
+        icon: "🚕",
+        name: "海雲台 → 廣안里·民樂 · Uber 15 min · ₩10k",
+        transport: "🚕 海雲台 LCT 區 → 廣안里民樂魚市場",
+        lat: 35.1555583, lng: 129.1238321,
+        gmaps: "https://maps.app.goo.gl/2sqWwpmyNqG7c8N39",
+        badge: "must",
+        desc: "<strong>民樂魚市場</strong> 1F 選現撈、2F 上桌切片，窗邊吃刺身看大橋。<strong>21:00 廣안리 M Drone Light Show</strong>（無人機表演✓）— 1,000 台無人機在大橋上空 10 分鐘演出，週六限定。下午記得上官網確認天候沒取消。"
+      }
+    ],
+    extras: [
+      {
+        name: "海雲台藍線公園 尾浦站",
+        lat: 35.158284, lng: 129.1727672,
+        gmaps: "https://maps.app.goo.gl/ySQbNS4zr25xBbqC9",
+        badge: "must",
+        desc: "Sky Capsule 空中列車與 Beach Train 海邊列車的共同起站。方向選尾浦 → 청사포 看海最美。"
+      },
+      {
+        name: "Sky Capsule 海雲台 청사포站",
+        lat: 35.1613733, lng: 129.1918758,
+        gmaps: "https://maps.app.goo.gl/3J1nqJKM69AboivY6",
+        badge: "must",
+        desc: "Sky Capsule 終點站。下車就是青沙浦，步行可到紅白燈塔 + Daritdol 玻璃步道。"
+      },
+      {
+        name: "青沙浦 紅白燈塔（踏石觀景台）",
+        lat: 35.1640365, lng: 129.1967173,
+        gmaps: "https://maps.app.goo.gl/twZrz5rgRrE7VNyN6",
+        badge: "view",
+        desc: "青沙浦地標。Daritdol 觀景台是玻璃地板天空步道，免費走在海面上俯瞰大海。"
+      },
+      {
+        name: "Cafe Rooftop 청사포",
+        lat: 35.1611366, lng: 129.1936685,
+        gmaps: "https://maps.app.goo.gl/D2cpMPDwLEdaUJtk6",
+        badge: "food",
+        desc: "頂樓海景咖啡，可坐一下午。看廣안大橋遠景 + 松島燈塔。"
+      },
+      {
+        name: "古來思魚糕 海雲台店",
+        lat: 35.1625695, lng: 129.1595472,
+        gmaps: "https://maps.app.goo.gl/4Py9Sgg7jqZ4RrKo6",
+        badge: "food",
+        desc: "釜山三大魚糕之一。現做魚糕串、起司魚糕、魚糕烏龍麵。當午餐剛剛好。"
+      },
+      {
+        name: "海雲台沙灘",
+        lat: 35.1586975, lng: 129.1603842,
+        gmaps: "https://maps.app.goo.gl/zUWXrSrdrkVXA5Yu9",
+        badge: "view",
+        desc: "釜山招牌沙灘，1.5 公里長。週末常有街頭表演。"
+      },
+      {
+        name: "冬柏島",
+        lat: 35.1545312, lng: 129.1525517,
+        gmaps: "https://maps.app.goo.gl/UgzTsXvS5Syba14i8",
+        badge: "view",
+        desc: "海雲台西側小島步道，繞一圈約 1 小時。看 APEC 之家、海邊岩石、海濱木棧道。"
+      },
+      {
+        name: "X the SKY 98F 觀景台",
+        lat: 35.1594862, lng: 129.1701677,
+        gmaps: "https://maps.app.goo.gl/hHbeHnDDvSpzsUWV7",
+        badge: "view",
+        desc: "LCT 觀景台 411 m 高，全韓第二高建築。看夕陽中的廣안大橋與整個釜山。₩29,000。建議 16:30 上去。"
+      },
+      {
+        name: "民樂魚市場",
+        lat: 35.1555583, lng: 129.1238321,
+        gmaps: "https://maps.app.goo.gl/2sqWwpmyNqG7c8N39",
+        badge: "food",
+        desc: "晚餐主場。1F 選現撈、2F 上桌切片，+₩10,000 服務費送辣魚湯小菜。窗邊吃刺身看大橋夜景。"
+      },
+      {
+        name: "廣안리 M Drone Light Show（21:00 表演區）",
+        lat: 35.154965, lng: 129.1224888,
+        gmaps: "https://maps.app.goo.gl/EHbMBYmgb13GX2JH8",
+        badge: "must",
+        desc: "週六晚 19:00 + 21:00 各一場，1,000 台無人機在廣안大橋上空 10-12 分鐘演出。沙灘上是最佳觀賞位置。"
+      }
+    ]
+  },
+  {
+    day: 2,
+    date: "10/25 (日)",
+    title: "影島深度日 + 海女村午餐",
+    sub: "白險灘 → 海女村 → 太宗台 → 西面烤肉",
+    stops: [
+      {
+        time: "10:30 – 12:00",
+        icon: "🚕",
+        name: "飯店 → 影島·白險灘 · Uber 30 min · ₩15k",
+        transport: "🚕 廣안里 → 影島西邊白險灘文化村",
+        lat: 35.0782798, lng: 129.0453198,
+        gmaps: "https://maps.app.goo.gl/keeYEHdaP1vVUMT87",
+        badge: "must",
+        desc: "<strong>白險灘文化村</strong>（影島✓ 韓版聖托里尼，電影《辯護人》拍攝地，白色階梯村落沿海岸線），慢慢走 1.5 小時。然後 Uber 約 15 分跨島到海女村午餐。"
+      },
+      {
+        time: "12:30 – 16:00",
+        icon: "🚕",
+        name: "白險灘 → 海女村 + 太宗台 · Uber 15 min · ₩8k",
+        transport: "🚕 跨影島東側：海女村午餐 → 太宗台 DANUBI 列車",
+        lat: 35.05247, lng: 129.092796,
+        gmaps: "https://maps.app.goo.gl/9EfKJ3rgkieRevPv5",
+        badge: "must",
+        desc: "<strong>海女村</strong>（海女✓）海邊大排檔吃海女現撈：海膽飯捲、海鮮拉麵、活鮑魚刺身。下午走 <strong>太宗台國家公園</strong>搭 <strong>DANUBI 觀光列車</strong>（₩4,000，第 3 個列車收集 ✓）繞燈塔、岩岸、觀景台一圈約 50 分鐘。離開順路經 <strong>三進魚糕本店</strong>買伴手禮。"
+      },
+      {
+        time: "19:00 – 22:00",
+        icon: "🚕",
+        name: "影島 → 西面·83 해치 · Uber 30 min · ₩13k",
+        transport: "🚕 太宗台 → 西面 83 해치烤肉店",
+        lat: 35.1580029, lng: 129.0611124,
+        gmaps: "https://maps.app.goo.gl/mRLYdcHJq6tSihYC8",
+        badge: "must",
+        desc: "<strong>83 해치 西面店</strong>（韓式烤肉✓）釜山當紅烤肉店，肉質鮮厚、CP 超高（人均 NT$450），在地人排隊店，建議 18:30 前到或先 KakaoTalk 訂位。飯後可走 <strong>西面布帳馬車街</strong>夜市攤車配燒酒當宵夜，或去 24h <strong>水營本家</strong>吃湯飯解膩。"
+      }
+    ],
+    extras: [
+      {
+        name: "白險灘文化村（Huinnyeoul）",
+        lat: 35.0782798, lng: 129.0453198,
+        gmaps: "https://maps.app.goo.gl/keeYEHdaP1vVUMT87",
+        badge: "view",
+        desc: "影島西邊韓版聖托里尼。沿海岸線白色階梯村落，咖啡店、藝廊密集。電影《辯護人》拍攝地。"
+      },
+      {
+        name: "海女村（太宗台旁）",
+        lat: 35.05247, lng: 129.092796,
+        gmaps: "https://maps.app.goo.gl/9EfKJ3rgkieRevPv5",
+        badge: "food",
+        desc: "影島南端海邊海女大排檔。海女現撈海膽飯捲、海鮮拉麵、活鮑魚刺身。海景第一排。"
+      },
+      {
+        name: "太宗台 DANUBI 觀光列車",
+        lat: 35.0598475, lng: 129.0802995,
+        gmaps: "https://maps.app.goo.gl/u4fZnpkSNRvnR2Ex5",
+        badge: "view",
+        desc: "影島最南端國家公園。搭 DANUBI 列車（₩4,000）繞燈塔、岩岸、觀景台一圈約 50 分鐘。海風大記得外套。"
+      },
+      {
+        name: "三進魚糕本店（影島）",
+        lat: 35.0929647, lng: 129.042794,
+        gmaps: "https://maps.app.goo.gl/y3AZUcbe61UtTiHn7",
+        badge: "food",
+        desc: "1953 年創立，釜山魚糕始祖。本店看製作過程 + 現吃熱魚糕，伴手禮買起來。離開太宗台順路。"
+      },
+      {
+        name: "83 해치 西面店",
+        lat: 35.1580029, lng: 129.0611124,
+        gmaps: "https://maps.app.goo.gl/mRLYdcHJq6tSihYC8",
+        badge: "must",
+        desc: "釜山當紅韓式烤肉店，돼지숙성육專門。15:30–01:00 營業。建議 18:30 前到或先 KakaoTalk 訂位。"
+      },
+      {
+        name: "西面布帳馬車街",
+        lat: 35.15686, lng: 129.05940,
+        gmaps: "https://www.google.com/maps/search/?api=1&query=35.15686,129.05940",
+        badge: "food",
+        desc: "西面地鐵站旁夜市攤車區。燒酒 + 章魚 + 雞爪 + 米腸。83 해치烤肉後當宵夜。"
+      }
+    ]
+  },
+  {
+    day: 3,
+    date: "10/26 (一)",
+    title: "甘川洞 + 松島水晶纜車 + Spa Land",
+    sub: "彩色山城 → 海上纜車 → 汗蒸幕",
+    stops: [
+      {
+        time: "10:30 – 14:00",
+        icon: "🚕",
+        name: "飯店 → 甘川洞文化村 · Uber 30 min · ₩13k",
+        transport: "🚕 廣안里 → 甘川洞文化村（彩色山城）",
+        lat: 35.0973904, lng: 129.0105924,
+        gmaps: "https://maps.app.goo.gl/16hfH5FjCqP6KHWaA",
+        badge: "must",
+        desc: "<strong>甘川洞文化村</strong>韓國馬丘比丘，彩色山城聚落 + 小王子打卡點，慢慢爬慢慢拍 2 小時。下山到富平 / 札嘎其區午餐：<strong>巨人炸雞</strong>（60 年老店整雞現炸）或 <strong>札嘎其海鮮市場</strong>海鮮鍋。<em>韓牛備案：일신명품한우 1F 정육 + 2F 식당，但 10/26 週一公休</em>。"
+      },
+      {
+        time: "15:00 – 17:00",
+        icon: "🚕",
+        name: "甘川洞 → 松島·海上纜車 · Uber 15 min · ₩6k",
+        transport: "🚕 富平 / 札嘎其 → 松島海上纜車站",
+        lat: 35.0763876, lng: 129.0236199,
+        gmaps: "https://maps.app.goo.gl/oBsqVyBYqskmGSu38",
+        badge: "must",
+        desc: "<strong>松島海上纜車</strong>（水晶車廂 ₩17,000 來回）1.6 km 跨海 + 86 m 高，地板透明俯瞰大海。下車後接 <strong>松島龍宮雲橋</strong>海上玻璃步道，看龍宮岩。約 2 小時走完。"
+      },
+      {
+        time: "17:30 – 22:00",
+        icon: "🚕",
+        name: "松島 → 新世界 Spa Land · Uber 30 min · ₩15k",
+        transport: "🚕 松島 → 新世界 Centum City Spa Land",
+        lat: 35.16898, lng: 129.13145,
+        gmaps: "https://www.google.com/maps/search/?api=1&query=35.16898,129.13145",
+        badge: "must",
+        desc: "<strong>新世界 Centum City Spa Land</strong>（汗蒸幕✓）₩20,000/4 小時，22 種主題汗蒸房、露天足湯、按摩。內部食堂可吃米腸湯飯當晚餐。21:30 Uber 回廣안里（₩9k），<strong>The Tilt 23F</strong> 喝一杯威士忌看廣안大橋夜景做釜山收尾。"
+      }
+    ],
+    extras: [
+      {
+        name: "甘川洞文化村",
+        lat: 35.0973904, lng: 129.0105924,
+        gmaps: "https://maps.app.goo.gl/16hfH5FjCqP6KHWaA",
+        badge: "view",
+        desc: "韓國馬丘比丘，彩色山城聚落 + 小王子打卡點。慢慢爬慢慢拍 2 小時。"
+      },
+      {
+        name: "巨人炸雞（富平市場）",
+        lat: 35.1023409, lng: 129.0261154,
+        gmaps: "https://maps.app.goo.gl/X4VAbmin1pjZ3xXC7",
+        badge: "food",
+        desc: "60 年炸雞老店。堅持用 1.3 公斤以上整雞現炸，皮酥肉嫩。甘川洞下山順路午餐。"
+      },
+      {
+        name: "札嘎其海鮮市場",
+        lat: 35.0966339, lng: 129.0307965,
+        gmaps: "https://maps.app.goo.gl/AUNdRDD49z5dp3Et6",
+        badge: "food",
+        desc: "釜山最大海鮮市場。1F 看活魚、2F 用餐區。海鮮鍋、生魚片現切現吃。"
+      },
+      {
+        name: "일신명품한우（韓牛 · 週一公休）",
+        lat: 35.1019735, lng: 129.0256479,
+        gmaps: "https://maps.app.goo.gl/PvpqH2G1QDtkcApp6",
+        badge: "food",
+        desc: "富平市場附近韓牛店，1F 정육 + 2F 식당，「肉嫩到入口即化」評語滿滿。10/26 週一公休，若改去其他天可加進來。"
+      },
+      {
+        name: "松島海上纜車站",
+        lat: 35.0763876, lng: 129.0236199,
+        gmaps: "https://maps.app.goo.gl/oBsqVyBYqskmGSu38",
+        badge: "must",
+        desc: "松島海上纜車起站。水晶車廂 ₩17,000 來回，跨海 1.6 km + 86 m 高，地板透明。"
+      },
+      {
+        name: "松島龍宮雲橋",
+        lat: 35.061897, lng: 129.022214,
+        gmaps: "https://maps.app.goo.gl/GX8r1yLeYfBnY1BC9",
+        badge: "view",
+        desc: "海邊玻璃步道，走在海上看龍宮岩。可從纜車南端站連接過去。"
+      },
+      {
+        name: "The Tilt 23F 廣안里夜景酒吧",
+        lat: 35.15303, lng: 129.11947,
+        gmaps: "https://www.google.com/maps/search/?api=1&query=35.15303,129.11947",
+        badge: "food",
+        desc: "23 樓無敵廣안大橋夜景。Spa Land 後最後一晚在釜山做收尾，搭一杯威士忌或調酒。"
+      }
+    ]
+  },
+  {
+    day: 4,
+    date: "10/27 (二)",
+    title: "告別釜山 · KTX 北上首爾",
+    sub: "10:00 一班 KTX 開往新世界",
+    stops: [
+      {
+        time: "10:00 – 11:30",
+        icon: "🚄",
+        name: "飯店 → 釜山站 · Uber 20 min → KTX 北上",
+        transport: "🚕 廣안리 → 釜山站（₩8k）+ 🚄 KTX 釜山 → 首爾（2h40m, ₩59,800）",
+        lat: 35.11534, lng: 129.04132,
+        gmaps: "https://www.google.com/maps/search/?api=1&query=35.11534,129.04132",
+        badge: "transport",
+        desc: "10:00 退房，Hotel 1F 咖啡或街角小店買早餐 → Uber 約 20 分到釜山站 → LOTTE Mall 採買伴手禮：<strong>三進魚糕、Café Knotted 甜甜圈、시루米糕</strong>。月台 GS25 買便當上車。<strong>KTX ₩59,800</strong> 經濟艙，2h40m 到首爾站，記得提早 1 個月在 KORAIL 訂位。"
+      }
+    ]
+  }
+];
+
+// ============== Map Init ==============
+const dayColors = {
+  0: getComputedStyle(document.documentElement).getPropertyValue('--day-0').trim(),
+  1: getComputedStyle(document.documentElement).getPropertyValue('--day-1').trim(),
+  2: getComputedStyle(document.documentElement).getPropertyValue('--day-2').trim(),
+  3: getComputedStyle(document.documentElement).getPropertyValue('--day-3').trim(),
+  4: getComputedStyle(document.documentElement).getPropertyValue('--day-4').trim()
+};
+
+const map = L.map('map', {
+  zoomControl: true,
+  scrollWheelZoom: false,
+  attributionControl: true
+}).setView([35.13, 129.07], 11);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 19
+}).addTo(map);
+
+// Enable scroll zoom when user clicks on map
+map.on('click focus', () => map.scrollWheelZoom.enable());
+map.on('mouseout', () => map.scrollWheelZoom.disable());
+
+// ====== Home Base · 4 晚的家 ======
+const BASE_HOTEL = {
+  name: "Ocean The Point Hotel Busan",
+  lat: 35.15389, lng: 129.11856,
+  desc: "廣안리 4 晚的家。7–10F 廣안大橋海景飯店，광안해변로 278번길 42。走路 1 分鐘到沙灘看無人機秀，每天從這裡出發、晚上回來。"
+};
+const hotelIcon = L.divIcon({
+  className: '',
+  html: `<div class="base-marker">🏨</div>`,
+  iconSize: [38, 38],
+  iconAnchor: [19, 19]
+});
+const hotelMarker = L.marker([BASE_HOTEL.lat, BASE_HOTEL.lng], { icon: hotelIcon, zIndexOffset: 1000 });
+hotelMarker.bindPopup(`
+  <div class="popup-time">🏨 Home Base · 4 晚都住這</div>
+  <div class="popup-name">${BASE_HOTEL.name}</div>
+  <span class="popup-tag extra">每日起點</span>
+  <div class="popup-desc">${BASE_HOTEL.desc}</div>
+`, { maxWidth: 280 });
+hotelMarker.addTo(map);
+
+const dayLayers = {}; // day -> L.layerGroup
+
+TRIP.forEach(dayObj => {
+  const layer = L.layerGroup();
+  const latlngs = [];
+
+  dayObj.stops.forEach((stop, idx) => {
+    const markerLabel = stop.icon || (idx + 1);
+    const icon = L.divIcon({
+      className: '',
+      html: `<div class="stop-marker day-${dayObj.day}">${markerLabel}</div>`,
+      iconSize: [34, 34],
+      iconAnchor: [17, 17]
+    });
+    const marker = L.marker([stop.lat, stop.lng], { icon });
+    const badgeHtml = stop.badge
+      ? `<span class="popup-tag ${stop.badge}">${
+          stop.badge === 'must' ? '★ 主題收集' :
+          stop.badge === 'food' ? '🍽 美食' :
+          stop.badge === 'transport' ? '🚕 交通' : ''
+        }</span>`
+      : '';
+    const transportHtml = stop.transport ? `<div class="popup-transport">${stop.transport}</div>` : '';
+    const gmapsUrl = stop.gmaps || `https://www.google.com/maps/search/?api=1&query=${stop.lat},${stop.lng}`;
+    marker.bindPopup(`
+      <div class="popup-time">${stop.time} · Day ${dayObj.day} · ${dayObj.date}</div>
+      <div class="popup-name">${stop.name}</div>
+      ${badgeHtml}
+      ${transportHtml}
+      <div class="popup-desc">${stop.desc}</div>
+      <a class="popup-gmaps" href="${gmapsUrl}" target="_blank" rel="noopener">📍 在 Google 地圖打開 →</a>
+    `, { maxWidth: 300 });
+    layer.addLayer(marker);
+    latlngs.push([stop.lat, stop.lng]);
+  });
+
+  // Build route line — use dayObj.route if provided (custom waypoints),
+  // otherwise auto-build: hotel → stops → hotel for days 1-3, hotel → stops for day 4.
+  let routeCoords;
+  if (dayObj.route && dayObj.route.length > 0) {
+    routeCoords = dayObj.route;
+  } else {
+    routeCoords = latlngs.slice();
+    const hotelCoord = [BASE_HOTEL.lat, BASE_HOTEL.lng];
+    if ([1, 2, 3].includes(dayObj.day) && routeCoords.length > 0) {
+      routeCoords = [hotelCoord, ...routeCoords, hotelCoord];
+    } else if (dayObj.day === 4 && routeCoords.length > 0) {
+      routeCoords = [hotelCoord, ...routeCoords];
+    }
+  }
+
+  // Route line for the day, with arrows via decorator-like dashed pattern
+  if (routeCoords.length > 1) {
+    const polyline = L.polyline(routeCoords, {
+      color: dayColors[dayObj.day],
+      weight: 4,
+      opacity: 0.85,
+      lineCap: 'round',
+      lineJoin: 'round',
+      dashArray: dayObj.day === 0 || dayObj.day === 4 ? '8,8' : null
+    });
+    layer.addLayer(polyline);
+
+    // Add direction arrows at each segment midpoint
+    for (let i = 0; i < routeCoords.length - 1; i++) {
+      const [lat1, lng1] = routeCoords[i];
+      const [lat2, lng2] = routeCoords[i+1];
+      const midLat = (lat1 + lat2) / 2;
+      const midLng = (lng1 + lng2) / 2;
+      const angle = Math.atan2(lat2 - lat1, lng2 - lng1) * 180 / Math.PI;
+      const arrowIcon = L.divIcon({
+        className: '',
+        html: `<div style="
+          width:0;height:0;
+          border-left:8px solid transparent;
+          border-right:8px solid transparent;
+          border-bottom:12px solid ${dayColors[dayObj.day]};
+          transform: rotate(${90 - angle}deg);
+          filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
+          opacity: 0.9;
+        "></div>`,
+        iconSize: [16, 12],
+        iconAnchor: [8, 6]
+      });
+      L.marker([midLat, midLng], { icon: arrowIcon, interactive: false, keyboard: false }).addTo(layer);
+    }
+  }
+
+  // ====== Extras: small secondary markers (no number, no polyline) ======
+  (dayObj.extras || []).forEach(extra => {
+    const icon = L.divIcon({
+      className: '',
+      html: `<div class="extra-marker day-${dayObj.day}" title="${extra.name}"></div>`,
+      iconSize: [18, 18],
+      iconAnchor: [9, 9]
+    });
+    const marker = L.marker([extra.lat, extra.lng], { icon, zIndexOffset: -100 });
+    const extraBadgeHtml = extra.badge
+      ? `<span class="popup-tag ${extra.badge}">${
+          extra.badge === 'must' ? '★ 主題' :
+          extra.badge === 'food' ? '🍽 美食' :
+          extra.badge === 'transport' ? '🚕 交通' :
+          extra.badge === 'view' ? '✨ 景點' : ''
+        }</span>`
+      : '';
+    const extraGmaps = extra.gmaps || `https://www.google.com/maps/search/?api=1&query=${extra.lat},${extra.lng}`;
+    marker.bindPopup(`
+      <div class="popup-time">📍 加碼點 · Day ${dayObj.day} · ${dayObj.date}</div>
+      <div class="popup-name">${extra.name}</div>
+      ${extraBadgeHtml}<span class="popup-tag extra">加碼推薦</span>
+      <div class="popup-desc">${extra.desc}</div>
+      <a class="popup-gmaps" href="${extraGmaps}" target="_blank" rel="noopener">📍 在 Google 地圖打開 →</a>
+    `, { maxWidth: 300 });
+    layer.addLayer(marker);
+  });
+
+  dayLayers[dayObj.day] = layer;
+});
+
+// Show all by default
+function getDayCoords(d) {
+  const coords = [
+    ...d.stops.map(s => [s.lat, s.lng]),
+    ...((d.extras || []).map(e => [e.lat, e.lng]))
+  ];
+  // Days 1-3 the polyline loops through hotel, include hotel in bounds
+  if ([1, 2, 3].includes(d.day)) {
+    coords.push([BASE_HOTEL.lat, BASE_HOTEL.lng]);
+  }
+  return coords;
+}
+function showDays(dayKey) {
+  Object.values(dayLayers).forEach(l => map.removeLayer(l));
+  if (dayKey === 'all') {
+    Object.values(dayLayers).forEach(l => l.addTo(map));
+    const allCoords = TRIP.flatMap(d => getDayCoords(d));
+    map.fitBounds(L.latLngBounds(allCoords).pad(0.15), { animate: true });
+  } else {
+    const dayNum = Number(dayKey);
+    dayLayers[dayNum].addTo(map);
+    const coords = getDayCoords(TRIP.find(d => d.day === dayNum));
+    if (coords.length === 1) {
+      map.setView(coords[0], 14, { animate: true });
+    } else {
+      map.fitBounds(L.latLngBounds(coords).pad(0.20), { animate: true });
+    }
+  }
+}
+showDays('all');
+
+document.querySelectorAll('.day-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    showDays(chip.dataset.day);
+  });
+});
+
+// ============== Build Timeline ==============
+const timeline = document.getElementById('timeline');
+TRIP.forEach(dayObj => {
+  const card = document.createElement('article');
+  card.className = 'day-card';
+  card.dataset.day = dayObj.day;
+  card.id = `day-${dayObj.day}`;
+
+  const stopsHtml = dayObj.stops.map((s, idx) => {
+    const badgeHtml = s.badge
+      ? `<span class="badge ${s.badge}">${
+          s.badge === 'must' ? '★ 主題收集' :
+          s.badge === 'food' ? '🍽 美食' :
+          s.badge === 'transport' ? '🚕 交通' : ''
+        }</span>`
+      : '';
+    const iconLabel = s.icon || (idx + 1);
+    const transportHtml = s.transport ? `<div class="stop-transport">${s.transport}</div>` : '';
+    const gmapsUrl = s.gmaps || `https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}`;
+    const extrasForStop = (dayObj.extras || []).filter(e => {
+      const distLat = Math.abs(e.lat - s.lat);
+      const distLng = Math.abs(e.lng - s.lng);
+      return distLat < 0.03 && distLng < 0.03;
+    });
+    const extrasHtml = extrasForStop.length > 0
+      ? `<div class="stop-extras"><div class="stop-extras-label">🍴 周邊景點 / 餐廳</div>${
+          extrasForStop.map(e => `<a href="${e.gmaps || `https://www.google.com/maps/search/?api=1&query=${e.lat},${e.lng}`}" target="_blank" rel="noopener" class="extra-chip"><span class="extra-chip-dot day-${dayObj.day}"></span>${e.name}</a>`).join('')
+        }</div>`
+      : '';
+    return `
+      <div class="stop">
+        <div class="stop-time">${s.time}<small>STOP ${idx+1}</small></div>
+        <div class="stop-body">
+          <div class="stop-name">
+            <span class="stop-icon day-${dayObj.day}">${iconLabel}</span>${s.name}
+            <span class="stop-badges">${badgeHtml}</span>
+          </div>
+          ${transportHtml}
+          <div class="stop-desc">${s.desc}</div>
+          ${extrasHtml}
+          <div class="stop-meta">📍 <a href="${gmapsUrl}" target="_blank" rel="noopener">在 Google 地圖打開</a></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  card.innerHTML = `
+    <div class="day-header">
+      <div class="day-header-meta">Day ${dayObj.day} · ${dayObj.date}</div>
+      <h3>${dayObj.title}</h3>
+      <div class="day-header-sub">${dayObj.sub}</div>
+    </div>
+    <div class="day-body">
+      <div class="stops">${stopsHtml}</div>
+    </div>
+  `;
+  timeline.appendChild(card);
+});
+
+// ============== Smooth scroll hash links update day selector ==============
+const dayAnchors = ['day-0','day-1','day-2','day-3','day-4'];
+window.addEventListener('hashchange', () => {
+  const hash = location.hash.replace('#','');
+  if (dayAnchors.includes(hash)) {
+    const dayNum = hash.split('-')[1];
+    document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('active'));
+    const chip = document.querySelector(`.day-chip[data-day="${dayNum}"]`);
+    if (chip) {
+      chip.classList.add('active');
+      showDays(dayNum);
+    }
+  }
+});
+
+// Hide map scroll-zoom hint after first interaction
+const mapDiv = document.getElementById('map');
+mapDiv.addEventListener('mouseenter', () => mapDiv.style.cursor = 'grab');
+</script>
+</body>
+</html>
