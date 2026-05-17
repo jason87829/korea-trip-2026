@@ -578,15 +578,56 @@
   .stop-icon.day-4 { background: var(--day-4); }
   /* Transport summary bar under stop name */
   .stop-transport {
-    display: inline-block;
+    display: block;
     margin: 6px 0 8px;
-    padding: 6px 12px;
+    padding: 8px 14px;
     background: rgba(31, 78, 107, 0.08);
     color: var(--c-ocean);
     border-left: 3px solid var(--c-ocean);
     border-radius: 4px;
     font-size: 13px;
     font-weight: 500;
+    line-height: 1.7;
+  }
+  /* Collapsible transit detail (step-by-step) */
+  .stop-transit-detail, .popup-transit-detail {
+    margin: 6px 0 10px;
+    font-size: 13px;
+  }
+  .stop-transit-detail summary, .popup-transit-detail summary {
+    cursor: pointer;
+    padding: 7px 12px;
+    background: rgba(31, 78, 107, 0.06);
+    border-radius: 8px;
+    color: var(--c-ocean);
+    font-weight: 600;
+    list-style: none;
+    user-select: none;
+    transition: background 0.15s ease;
+  }
+  .stop-transit-detail summary:hover, .popup-transit-detail summary:hover {
+    background: rgba(31, 78, 107, 0.12);
+  }
+  .stop-transit-detail summary::-webkit-details-marker,
+  .popup-transit-detail summary::-webkit-details-marker { display: none; }
+  .stop-transit-detail summary::after,
+  .popup-transit-detail summary::after { content: "  ▼"; font-size: 10px; opacity: 0.6; }
+  .stop-transit-detail[open] summary::after,
+  .popup-transit-detail[open] summary::after { content: "  ▲"; }
+  .stop-transit-detail ol, .popup-transit-detail ol {
+    margin: 8px 0 4px;
+    padding: 10px 14px 10px 32px;
+    background: rgba(250, 245, 236, 0.7);
+    border-radius: 6px;
+    line-height: 1.7;
+  }
+  .stop-transit-detail li, .popup-transit-detail li {
+    margin: 5px 0;
+    color: var(--c-ink);
+  }
+  .stop-transit-detail li::marker, .popup-transit-detail li::marker {
+    color: var(--c-ocean);
+    font-weight: 700;
   }
   /* Sub-spots (extras) chips inline in timeline cards */
   .stop-extras {
@@ -944,6 +985,12 @@ const TRIP = [
         lat: 35.1796, lng: 128.9384,
         gmaps: "https://www.google.com/maps/search/?api=1&query=35.1796,128.9384",
         badge: "transport",
+        transitSteps: [
+          "✈ 19:55 飛機落地金海國際機場",
+          "🛂 20:00–20:30 入境審查 + 提行李（旺季排隊可能 45 min）",
+          "📱 確認 Uber App 已開、台灣信用卡可用、Kakao T 備用裝好",
+          "🚪 走到機場 4F arrivals 大廳出口右側 Uber 上車區"
+        ],
         desc: "出機場前先確認 Uber App 可用（用台灣同一個帳號）。提行李＋入境約 30–45 分鐘。"
       },
       {
@@ -954,6 +1001,14 @@ const TRIP = [
         lat: 35.1513254, lng: 129.1154937,
         gmaps: "https://maps.app.goo.gl/Zi39QEsP4ShDHN7R7",
         badge: "food",
+        transitSteps: [
+          "🚪 機場 4F arrivals 大廳出口右側 Uber 上車區",
+          "📱 Uber 輸入目的地：Ocean The Point Hotel Busan（광안해변로 278번길 42）",
+          "🚕 45 min 車程，車資自動扣台灣信用卡（₩25-30k ≈ NT$600）",
+          "🏨 21:30 抵達飯店、check-in 放行李",
+          "🌊 海邊散步看廣안大橋夜燈（整點 +10 分有點燈動畫）",
+          "🍖 22:00 走 5 min 到 고결（광남로 121）吃稻草烤肋排做收尾，最晚 24:00 收"
+        ],
         desc: "21:30 抵達 Ocean The Point Hotel check-in → 海邊散步看廣안大橋夜燈（整點 +10 分有點燈動畫）→ 走 5 分鐘到 <strong>고결 廣안里稻草烤肋排</strong>吃 짚불삼겹살（稻草烤五花肉）+ 우대갈비（厚切牛肋骨）做收尾，營業到 24:00。"
       }
     ],
@@ -990,6 +1045,14 @@ const TRIP = [
         lat: 35.158284, lng: 129.1727672,
         gmaps: "https://maps.app.goo.gl/ySQbNS4zr25xBbqC9",
         badge: "must",
+        transitSteps: [
+          "🚶 09:50 飯店出門左轉，沿광안해변로步行 6 min 到 광안역 3번 출구",
+          "🚇 2 호선往萇山方向（綠線），15 min · 7 站，₩1,500（用 T-money 或 Wowpass）",
+          "🚇 終點：海雲台역 → 從 5번 출구出站",
+          "🚶 沿 달맞이길 (Moontan Road) 上坡步行 15 min 到 미포정거장（途中有韓劇咖啡店）",
+          "🎫 報到取 Sky Capsule 預約票（建議提前 1 週用官網訂）",
+          "🚞 10:30 搭 Sky Capsule，4 人膠囊高架軌道 30 min 沿海岸到 청사포정거장"
+        ],
         desc: "10:30 搭 <strong>Sky Capsule</strong>（空中列車✓，提早一週訂位）30 分鐘膠囊列車到青沙浦。下車走 <strong>紅白燈塔 + Daritdol 玻璃步道</strong>。午餐 <strong>古來思魚糕海雲台店</strong>現做魚糕串、或 <strong>Cafe Rooftop</strong>頂樓海景咖啡。"
       },
       {
@@ -1000,6 +1063,15 @@ const TRIP = [
         lat: 35.1586975, lng: 129.1603842,
         gmaps: "https://maps.app.goo.gl/zUWXrSrdrkVXA5Yu9",
         badge: "must",
+        transitSteps: [
+          "🍱 13:30 청사포정거장 旁吃午餐：古來思魚糕海雲台店 / Cafe Rooftop",
+          "🎫 14:00 청사포정거장 報到 Beach Train（單程 ₩7,000，開放式車廂）",
+          "🚞 沿海岸線慢晃 30 min 西返 → 미포정거장",
+          "🚶 14:30 미포 走 5 min 到 海雲台沙灘 北端",
+          "🌊 沿沙灘走 15 min 到西端 → 接冬柏島步道環島 1 小時（APEC 之家、海邊岩石、海濱木棧道）",
+          "🚶 16:00 冬柏島出來走 10 min 到 X the SKY（LCT 隆德塔）",
+          "🎫 16:30 進 X the SKY（₩29,000）搭電梯 98F 看夕陽中的廣安大橋"
+        ],
         desc: "<strong>Beach Train</strong>（海邊列車✓）開放式車廂沿海岸線慢晃 30 分。下車散步 <strong>海雲台沙灘 + 冬柏島</strong>環島（APEC 之家、海邊岩石）。16:30 上 <strong>X the SKY 98F 觀景台</strong>（411 m）看夕陽中的廣安大橋。"
       },
       {
@@ -1010,6 +1082,15 @@ const TRIP = [
         lat: 35.1555583, lng: 129.1238321,
         gmaps: "https://maps.app.goo.gl/2sqWwpmyNqG7c8N39",
         badge: "must",
+        transitSteps: [
+          "🚶 18:30 X the SKY 走 5 min 到 海雲台역 5번 출구",
+          "🚇 2 호선往沙下方向（綠線），5 站 13 min · ₩1,500 → 民樂역",
+          "🚶 民樂역 1번 출구 走 8 min 到 民樂魚市場",
+          "🍣 19:00 民樂魚市場 1F 選現撈、2F 上桌切片（+₩10,000 服務費送辣魚湯小菜）",
+          "🌉 20:30 走出市場到沙灘區（沙灘上是無人機秀最佳觀賞位置）",
+          "🚁 21:00 廣안리 M Drone Light Show 10-12 min（下午先上官網確認沒被天候取消）",
+          "🏨 21:15 沿沙灘走 5 min 回飯店"
+        ],
         desc: "<strong>民樂魚市場</strong> 1F 選現撈、2F 上桌切片，窗邊吃刺身看大橋。<strong>21:00 廣안리 M Drone Light Show</strong>（無人機表演✓）— 1,000 台無人機在大橋上空 10 分鐘演出，週六限定。下午記得上官網確認天候沒取消。秀完走 5 min 回飯店。"
       }
     ],
@@ -1100,6 +1181,14 @@ const TRIP = [
         lat: 35.0782798, lng: 129.0453198,
         gmaps: "https://maps.app.goo.gl/keeYEHdaP1vVUMT87",
         badge: "must",
+        transitSteps: [
+          "🚪 10:00 飯店門口開 Uber",
+          "📱 目的地：흰여울문화마을 (白險灘文化村)",
+          "🚕 30 min 車程沿海岸往西南，車資 ₩15k",
+          "🚶 10:30 抵達白險灘文化村入口（韓版聖托里尼）",
+          "📷 沿白色階梯村慢慢走 1.5h（電影《辯護人》拍攝地、海岸線小聚落）",
+          "🚕 12:00 結束後叫 Uber → 海女村（跨影島東邊，12 min · ₩8k）"
+        ],
         desc: "<strong>白險灘文化村</strong>（影島✓ 韓版聖托里尼，電影《辯護人》拍攝地，白色階梯村落沿海岸線），慢慢走 1.5 小時。然後 Uber 約 15 分跨島到海女村午餐。"
       },
       {
@@ -1110,6 +1199,15 @@ const TRIP = [
         lat: 35.05247, lng: 129.092796,
         gmaps: "https://maps.app.goo.gl/9EfKJ3rgkieRevPv5",
         badge: "must",
+        transitSteps: [
+          "🍣 12:30 海女村午餐（1.5h）：海膽飯捲、海鮮拉麵、活鮑魚刺身，海景第一排",
+          "🚕 14:00 海女村 → 太宗台（5 min · ₩4k，兩地很近）",
+          "🎫 14:15 太宗台入口買 DANUBI 觀光列車票（₩4,000）",
+          "🚞 DANUBI 列車繞園 50 min：燈塔、岩岸、觀景台、影島燈塔",
+          "📷 15:30 太宗台自由散步、看海拍照",
+          "🚕 16:30 太宗台 → 三進魚糕本店（15 min · ₩7k，順路）",
+          "🛍 17:00 三進魚糕本店看魚糕現做 + 採買伴手禮"
+        ],
         desc: "<strong>海女村</strong>（海女✓）海邊大排檔吃海女現撈：海膽飯捲、海鮮拉麵、活鮑魚刺身。下午走 <strong>太宗台國家公園</strong>搭 <strong>DANUBI 觀光列車</strong>（₩4,000，第 3 個列車收集 ✓）繞燈塔、岩岸、觀景台一圈約 50 分鐘。離開順路經 <strong>三進魚糕本店</strong>買伴手禮。"
       },
       {
@@ -1120,6 +1218,13 @@ const TRIP = [
         lat: 35.1580029, lng: 129.0611124,
         gmaps: "https://maps.app.goo.gl/mRLYdcHJq6tSihYC8",
         badge: "must",
+        transitSteps: [
+          "🚕 17:30 三進魚糕 / 太宗台 → 西面 83 해치（30 min · ₩13k，經 영도대교稍塞）",
+          "🍖 18:15 抵達 83 해치 西面店（建議先 KakaoTalk 訂位）",
+          "🍷 19:00–21:00 烤肉晚餐（돼지숙성육 厚切五花、特上肉、人均 NT$450）",
+          "🍢 21:00–22:00 飯後散步 西面布帳馬車街配燒酒，或去 24h 水營本家解膩",
+          "🚇 22:30 西면역 2 호선 → 광안역（10 min · ₩1,500）+ 步行 6 min 回飯店"
+        ],
         desc: "<strong>83 해치 西面店</strong>（韓式烤肉✓）釜山當紅烤肉店，肉質鮮厚、CP 超高（人均 NT$450），在地人排隊店，建議 18:30 前到或先 KakaoTalk 訂位。飯後可走 <strong>西面布帳馬車街</strong>夜市攤車配燒酒當宵夜，或去 24h <strong>水營本家</strong>吃湯飯解膩。"
       }
     ],
@@ -1182,6 +1287,15 @@ const TRIP = [
         lat: 35.0973904, lng: 129.0105924,
         gmaps: "https://maps.app.goo.gl/16hfH5FjCqP6KHWaA",
         badge: "must",
+        transitSteps: [
+          "🚶 09:50 飯店左轉走 6 min 到 광안역 3번 출구",
+          "🚇 2 호선往沙下方向 → 서면역（25 min · ₩1,500），於서면換 1 호선",
+          "🚇 1 호선往多大浦海水浴場方向 → 토성역 6번 출구（8 min）",
+          "🚌 出站走 5 min 到公車站 → 마을 2 / 2-2 社區小巴（10-15 min 一班）",
+          "🚌 小巴上山 10 min 到 감천문화마을 정류장",
+          "🎨 11:30–13:30 慢慢爬慢慢拍：彩色山城、小王子打卡點、裝置藝術",
+          "🍗 13:30 下山叫 Uber 到 富平市場 巨人炸雞午餐（5 min · ₩4k）"
+        ],
         desc: "<strong>甘川洞文化村</strong>韓國馬丘比丘，彩色山城聚落 + 小王子打卡點，慢慢爬慢慢拍 2 小時。下山到富平 / 札嘎其區午餐：<strong>巨人炸雞</strong>（60 年老店整雞現炸）或 <strong>札嘎其海鮮市場</strong>海鮮鍋。<em>韓牛備案：일신명품한우 1F 정육 + 2F 식당，但 10/26 週一公休</em>。"
       },
       {
@@ -1192,6 +1306,14 @@ const TRIP = [
         lat: 35.0763876, lng: 129.0236199,
         gmaps: "https://maps.app.goo.gl/oBsqVyBYqskmGSu38",
         badge: "must",
+        transitSteps: [
+          "🚕 14:30 富平市場 / 巨人炸雞 → 松島海上纜車（베이정거장）（15 min · ₩6k）",
+          "🎫 14:45 售票口買水晶車廂來回票 ₩17,000",
+          "🚡 15:00 搭乘水晶車廂跨海 1.6 km、86 m 高（地板透明俯瞰）→ 송도해수욕장 정거장",
+          "🌉 15:20 下車走 龍宮雲橋 海上玻璃步道（看龍宮岩、可拍照 30 min）",
+          "🚡 16:10 搭纜車回 베이정거장",
+          "🚶 16:30 在松島海邊散步或喝杯咖啡 30 min"
+        ],
         desc: "<strong>松島海上纜車</strong>（水晶車廂 ₩17,000 來回）1.6 km 跨海 + 86 m 高，地板透明俯瞰大海。下車後接 <strong>松島龍宮雲橋</strong>海上玻璃步道，看龍宮岩。約 2 小時走完。"
       },
       {
@@ -1202,6 +1324,15 @@ const TRIP = [
         lat: 35.16898, lng: 129.13145,
         gmaps: "https://www.google.com/maps/search/?api=1&query=35.16898,129.13145",
         badge: "must",
+        transitSteps: [
+          "🚕 17:00 松島 → 新世界 Centum City（30 min · ₩15k，跨城市最快）",
+          "🎫 17:30 進新世界百貨 B1F Spa Land 售票（₩20,000 / 4 小時）",
+          "🛀 17:45–21:30 Spa Land 4 小時：22 種主題汗蒸房、露天足湯、不老草足浴",
+          "🍲 中間在內部食堂吃米腸湯飯、烤蛋當晚餐",
+          "🚕 21:30 出館叫 Uber 回廣안리（10 min · ₩9k）",
+          "🍸 22:00 The Tilt 23F 喝一杯威士忌看廣안大橋夜景做收尾",
+          "🚶 22:30 走 5 min 回飯店收行李"
+        ],
         desc: "<strong>新世界 Centum City Spa Land</strong>（汗蒸幕✓）₩20,000/4 小時，22 種主題汗蒸房、露天足湯、按摩。內部食堂可吃米腸湯飯當晚餐。21:30 Uber 回廣안里（₩9k），<strong>The Tilt 23F</strong> 喝一杯威士忌看廣안大橋夜景做釜山收尾。"
       }
     ],
@@ -1271,6 +1402,14 @@ const TRIP = [
         lat: 35.11534, lng: 129.04132,
         gmaps: "https://www.google.com/maps/search/?api=1&query=35.11534,129.04132",
         badge: "transport",
+        transitSteps: [
+          "🏨 10:00 飯店退房，Hotel 1F 咖啡或街角小店買 toast / 飯卷當早餐",
+          "🚕 10:30 飯店門口叫 Uber → 부산역 LOTTE Mall（20 min · ₩8k）",
+          "🛍 10:50 LOTTE Mall 採買伴手禮：三進魚糕 / Café Knotted 甜甜圈 / 시루米糕",
+          "🍱 11:15 KTX 月台 GS25 買便當 + 海苔飯卷 + 香蕉牛奶上車吃",
+          "🚄 11:30 KTX 釜山站發車 → 首爾站（2h40m · ₩59,800）",
+          "📍 14:10 抵達首爾站"
+        ],
         desc: "10:00 退房，Hotel 1F 咖啡或街角小店買早餐 → Uber 約 20 分到釜山站 → LOTTE Mall 採買伴手禮：<strong>三進魚糕、Café Knotted 甜甜圈、시루米糕</strong>。月台 GS25 買便當上車。<strong>KTX ₩59,800</strong> 經濟艙，2h40m 到首爾站，記得提早 1 個月在 KORAIL 訂位。"
       }
     ]
@@ -1346,15 +1485,19 @@ TRIP.forEach(dayObj => {
         }</span>`
       : '';
     const transportHtml = stop.transport ? `<div class="popup-transport">${stop.transport}</div>` : '';
+    const transitStepsHtml = stop.transitSteps && stop.transitSteps.length > 0
+      ? `<details class="popup-transit-detail"><summary>🗺 詳細步驟 (${stop.transitSteps.length} 步)</summary><ol>${stop.transitSteps.map(step => `<li>${step}</li>`).join('')}</ol></details>`
+      : '';
     const gmapsUrl = stop.gmaps || `https://www.google.com/maps/search/?api=1&query=${stop.lat},${stop.lng}`;
     marker.bindPopup(`
       <div class="popup-time">${stop.time} · Day ${dayObj.day} · ${dayObj.date}</div>
       <div class="popup-name">${stop.name}</div>
       ${badgeHtml}
       ${transportHtml}
+      ${transitStepsHtml}
       <div class="popup-desc">${stop.desc}</div>
       <a class="popup-gmaps" href="${gmapsUrl}" target="_blank" rel="noopener">📍 在 Google 地圖打開 →</a>
-    `, { maxWidth: 300 });
+    `, { maxWidth: 320 });
     layer.addLayer(marker);
     latlngs.push([stop.lat, stop.lng]);
   });
@@ -1499,6 +1642,9 @@ TRIP.forEach(dayObj => {
       : '';
     const iconLabel = s.icon || (idx + 1);
     const transportHtml = s.transport ? `<div class="stop-transport">${s.transport}</div>` : '';
+    const transitStepsHtml = s.transitSteps && s.transitSteps.length > 0
+      ? `<details class="stop-transit-detail"><summary>🗺 詳細步驟 (${s.transitSteps.length} 步)</summary><ol>${s.transitSteps.map(step => `<li>${step}</li>`).join('')}</ol></details>`
+      : '';
     const gmapsUrl = s.gmaps || `https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}`;
     const extrasForStop = (dayObj.extras || []).filter(e => {
       const distLat = Math.abs(e.lat - s.lat);
@@ -1519,6 +1665,7 @@ TRIP.forEach(dayObj => {
             <span class="stop-badges">${badgeHtml}</span>
           </div>
           ${transportHtml}
+          ${transitStepsHtml}
           <div class="stop-desc">${s.desc}</div>
           ${extrasHtml}
           <div class="stop-meta">📍 <a href="${gmapsUrl}" target="_blank" rel="noopener">在 Google 地圖打開</a></div>
