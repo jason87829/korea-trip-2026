@@ -1341,22 +1341,21 @@ const TRIP = [
       },
       {
         time: "19:00 – 22:00",
-        icon: "🚇",
-        name: "海雲台 → 廣安里·民樂 · 地鐵 2 號線 (2 호선) · ₩1,500",
-        transport: "🚇 X the SKY 走 5 min 到 海雲台站 (해운대역) → 2 號線 (2 호선) 13 min → 民樂站 (민락역) → 走 8 min 到 民樂魚市場 · 共約 26 min / ₩1,500<br/>🚕 看完夕陽想直接吃飯可 Uber 15 min · ₩10k",
+        icon: "🚶",
+        name: "飯店 → 民樂海鮮 + 無人機秀（走路 10 min）",
+        transport: "🚶 18:50 從飯店沿廣安海邊路 (광안해변로) 往北走 10 min · 免費<br/>🚕 不想走 Uber 5 min · ₩4k",
         lat: 35.1555583, lng: 129.1238321,
         gmaps: "https://maps.app.goo.gl/2sqWwpmyNqG7c8N39",
         badge: "must",
         transitSteps: [
-          "🚶 18:30 X the SKY 走 5 min 到 海雲台站 (해운대역) 5 號出口 (5번 출구)",
-          "🚇 2 號線 (2 호선)往양산方向（綠線），5 站 13 min · ₩1,500 → 民樂站 (민락역)",
-          "🚶 民樂站 (민락역) 1 號出口 (1번 출구) 走 8 min 到 民樂魚市場",
-          "🍣 19:00 民樂魚市場 1F 選現撈、2F 上桌切片（+₩10,000 服務費送辣魚湯小菜）",
-          "🌉 20:30 走出市場到沙灘區（沙灘上是無人機秀最佳觀賞位置）",
-          "🚁 21:00 廣安리 M Drone Light Show 10-12 min（下午先上官網確認沒被天候取消）",
-          "🏨 21:15 沿沙灘走 5 min 回飯店"
+          "🚶 18:50 飯店出門，沿廣安海邊路 (광안해변로) 往北走 10 min 到 民樂魚市場",
+          "🍣 19:00–20:30 民樂魚市場吃晚餐：1F 選現撈、2F 上桌切片，+₩10,000 服務費送辣魚湯＋小菜（坐窗邊看大橋）",
+          "🚶 20:30 走出市場往廣安沙灘移動（步行 5 min）",
+          "🌉 20:45 在廣安沙灘佔位（最佳觀賞點：沙灘中央偏左對著廣安大橋）",
+          "🚁 21:00 廣安里 M Drone Light Show 10-12 min（記得下午先上官網確認沒被天候取消）",
+          "🏨 21:15 沿沙灘往南走 5 min 回飯店"
         ],
-        desc: "<strong>民樂魚市場</strong> 1F 選現撈、2F 上桌切片，窗邊吃刺身看大橋。<strong>21:00 廣安리 M Drone Light Show</strong>（無人機表演✓）— 1,000 台無人機在大橋上空 10 分鐘演出，週六限定。下午記得上官網確認天候沒取消。秀完走 5 min 回飯店。"
+        desc: "<strong>民樂魚市場</strong> 1F 選現撈、2F 上桌切片，窗邊吃刺身看大橋。<strong>21:00 廣安里 M Drone Light Show</strong>（無人機表演✓）— 1,000 台無人機在大橋上空 10 分鐘演出，週六限定。下午記得上官網確認天候沒取消。秀完走 5 min 回飯店。"
       }
     ],
     extras: [
@@ -1780,7 +1779,7 @@ TRIP.forEach(dayObj => {
       : '';
     const transportHtml = stop.transport ? `<div class="popup-transport">${stop.transport}</div>` : '';
     const transitStepsHtml = stop.transitSteps && stop.transitSteps.length > 0
-      ? `<details class="popup-transit-detail"><summary>🗺 詳細步驟 (${stop.transitSteps.length} 步)</summary><ol>${stop.transitSteps.map(step => `<li>${step}</li>`).join('')}</ol></details>`
+      ? `<details class="popup-transit-detail" open><summary>🗺 完整步驟（怎麼去 · 去哪 · 吃什麼）· ${stop.transitSteps.length} 步</summary><ol>${stop.transitSteps.map(step => `<li>${step}</li>`).join('')}</ol></details>`
       : '';
     const gmapsUrl = stop.gmaps || `https://www.google.com/maps/search/?api=1&query=${stop.lat},${stop.lng}`;
     marker.bindPopup(`
@@ -1937,7 +1936,7 @@ TRIP.forEach(dayObj => {
     const iconLabel = s.icon || (idx + 1);
     const transportHtml = s.transport ? `<div class="stop-transport">${s.transport}</div>` : '';
     const transitStepsHtml = s.transitSteps && s.transitSteps.length > 0
-      ? `<details class="stop-transit-detail"><summary>🗺 詳細步驟 (${s.transitSteps.length} 步)</summary><ol>${s.transitSteps.map(step => `<li>${step}</li>`).join('')}</ol></details>`
+      ? `<details class="stop-transit-detail" open><summary>🗺 完整步驟（怎麼去 · 去哪 · 吃什麼）· ${s.transitSteps.length} 步</summary><ol>${s.transitSteps.map(step => `<li>${step}</li>`).join('')}</ol></details>`
       : '';
     const gmapsUrl = s.gmaps || `https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}`;
     const extrasForStop = (dayObj.extras || []).filter(e => {
