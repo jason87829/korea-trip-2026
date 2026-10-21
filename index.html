@@ -3,12 +3,675 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>釜산 4 Days · 廣安大橋下的賞楓之旅 | 2026.10.23 – 10.27</title>
-<meta name="description" content="2026 年 10 月底釜山 4 天 3 完整天悠閒行程：海雲台 Sky Capsule、廣安里無人機秀、影島海女村、甘川洞、松島纜車、Spa Land 汗蒸幕，含互動式路線地圖。" />
+<title>韓國秋旅 2026 · 釜山＋首爾 | 10.23 – 10.31</title>
+<meta name="description" content="2026 年 10 月底韓國 9 天行程：釜山 10/23–10/27、首爾 10/27–10/31。釜山：海雲台 Sky Capsule、廣安里無人機秀、影島海女村、甘川洞、松島纜車、Spa Land 汗蒸幕，含互動式路線地圖。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Caveat:wght@600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<style>/* leaflet 1.9.4 */
+/* required styles */
+
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-container,
+.leaflet-pane > svg,
+.leaflet-pane > canvas,
+.leaflet-zoom-box,
+.leaflet-image-layer,
+.leaflet-layer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	}
+.leaflet-container {
+	overflow: hidden;
+	}
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	  -webkit-user-drag: none;
+	}
+/* Prevents IE11 from highlighting tiles in blue */
+.leaflet-tile::selection {
+	background: transparent;
+}
+/* Safari renders non-retina tile on retina better with this, but Chrome is worse */
+.leaflet-safari .leaflet-tile {
+	image-rendering: -webkit-optimize-contrast;
+	}
+/* hack that prevents hw layers "stretching" when loading new tiles */
+.leaflet-safari .leaflet-tile-container {
+	width: 1600px;
+	height: 1600px;
+	-webkit-transform-origin: 0 0;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	display: block;
+	}
+/* .leaflet-container svg: reset svg max-width decleration shipped in Joomla! (joomla.org) 3.x */
+/* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */
+.leaflet-container .leaflet-overlay-pane svg {
+	max-width: none !important;
+	max-height: none !important;
+	}
+.leaflet-container .leaflet-marker-pane img,
+.leaflet-container .leaflet-shadow-pane img,
+.leaflet-container .leaflet-tile-pane img,
+.leaflet-container img.leaflet-image-layer,
+.leaflet-container .leaflet-tile {
+	max-width: none !important;
+	max-height: none !important;
+	width: auto;
+	padding: 0;
+	}
+
+.leaflet-container img.leaflet-tile {
+	/* See: https://bugs.chromium.org/p/chromium/issues/detail?id=600120 */
+	mix-blend-mode: plus-lighter;
+}
+
+.leaflet-container.leaflet-touch-zoom {
+	-ms-touch-action: pan-x pan-y;
+	touch-action: pan-x pan-y;
+	}
+.leaflet-container.leaflet-touch-drag {
+	-ms-touch-action: pinch-zoom;
+	/* Fallback for FF which doesn't support pinch-zoom */
+	touch-action: none;
+	touch-action: pinch-zoom;
+}
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+	-ms-touch-action: none;
+	touch-action: none;
+}
+.leaflet-container {
+	-webkit-tap-highlight-color: transparent;
+}
+.leaflet-container a {
+	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
+}
+.leaflet-tile {
+	filter: inherit;
+	visibility: hidden;
+	}
+.leaflet-tile-loaded {
+	visibility: inherit;
+	}
+.leaflet-zoom-box {
+	width: 0;
+	height: 0;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	z-index: 800;
+	}
+/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
+.leaflet-overlay-pane svg {
+	-moz-user-select: none;
+	}
+
+.leaflet-pane         { z-index: 400; }
+
+.leaflet-tile-pane    { z-index: 200; }
+.leaflet-overlay-pane { z-index: 400; }
+.leaflet-shadow-pane  { z-index: 500; }
+.leaflet-marker-pane  { z-index: 600; }
+.leaflet-tooltip-pane   { z-index: 650; }
+.leaflet-popup-pane   { z-index: 700; }
+
+.leaflet-map-pane canvas { z-index: 100; }
+.leaflet-map-pane svg    { z-index: 200; }
+
+.leaflet-vml-shape {
+	width: 1px;
+	height: 1px;
+	}
+.lvml {
+	behavior: url(#default#VML);
+	display: inline-block;
+	position: absolute;
+	}
+
+
+/* control positioning */
+
+.leaflet-control {
+	position: relative;
+	z-index: 800;
+	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
+	pointer-events: auto;
+	}
+.leaflet-top,
+.leaflet-bottom {
+	position: absolute;
+	z-index: 1000;
+	pointer-events: none;
+	}
+.leaflet-top {
+	top: 0;
+	}
+.leaflet-right {
+	right: 0;
+	}
+.leaflet-bottom {
+	bottom: 0;
+	}
+.leaflet-left {
+	left: 0;
+	}
+.leaflet-control {
+	float: left;
+	clear: both;
+	}
+.leaflet-right .leaflet-control {
+	float: right;
+	}
+.leaflet-top .leaflet-control {
+	margin-top: 10px;
+	}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 10px;
+	}
+.leaflet-left .leaflet-control {
+	margin-left: 10px;
+	}
+.leaflet-right .leaflet-control {
+	margin-right: 10px;
+	}
+
+
+/* zoom and fade animations */
+
+.leaflet-fade-anim .leaflet-popup {
+	opacity: 0;
+	-webkit-transition: opacity 0.2s linear;
+	   -moz-transition: opacity 0.2s linear;
+	        transition: opacity 0.2s linear;
+	}
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
+	opacity: 1;
+	}
+.leaflet-zoom-animated {
+	-webkit-transform-origin: 0 0;
+	    -ms-transform-origin: 0 0;
+	        transform-origin: 0 0;
+	}
+svg.leaflet-zoom-animated {
+	will-change: transform;
+}
+
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
+	}
+.leaflet-zoom-anim .leaflet-tile,
+.leaflet-pan-anim .leaflet-tile {
+	-webkit-transition: none;
+	   -moz-transition: none;
+	        transition: none;
+	}
+
+.leaflet-zoom-anim .leaflet-zoom-hide {
+	visibility: hidden;
+	}
+
+
+/* cursors */
+
+.leaflet-interactive {
+	cursor: pointer;
+	}
+.leaflet-grab {
+	cursor: -webkit-grab;
+	cursor:    -moz-grab;
+	cursor:         grab;
+	}
+.leaflet-crosshair,
+.leaflet-crosshair .leaflet-interactive {
+	cursor: crosshair;
+	}
+.leaflet-popup-pane,
+.leaflet-control {
+	cursor: auto;
+	}
+.leaflet-dragging .leaflet-grab,
+.leaflet-dragging .leaflet-grab .leaflet-interactive,
+.leaflet-dragging .leaflet-marker-draggable {
+	cursor: move;
+	cursor: -webkit-grabbing;
+	cursor:    -moz-grabbing;
+	cursor:         grabbing;
+	}
+
+/* marker & overlays interactivity */
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+	pointer-events: none;
+	}
+
+.leaflet-marker-icon.leaflet-interactive,
+.leaflet-image-layer.leaflet-interactive,
+.leaflet-pane > svg path.leaflet-interactive,
+svg.leaflet-image-layer.leaflet-interactive path {
+	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
+	pointer-events: auto;
+	}
+
+/* visual tweaks */
+
+.leaflet-container {
+	background: #ddd;
+	outline-offset: 1px;
+	}
+.leaflet-container a {
+	color: #0078A8;
+	}
+.leaflet-zoom-box {
+	border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);
+	}
+
+
+/* general typography */
+.leaflet-container {
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-size: 0.75rem;
+	line-height: 1.5;
+	}
+
+
+/* general toolbar styles */
+
+.leaflet-bar {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;
+	}
+.leaflet-bar a {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	}
+.leaflet-bar a,
+.leaflet-control-layers-toggle {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	}
+.leaflet-bar a:hover,
+.leaflet-bar a:focus {
+	background-color: #f4f4f4;
+	}
+.leaflet-bar a:first-child {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	}
+.leaflet-bar a:last-child {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: none;
+	}
+.leaflet-bar a.leaflet-disabled {
+	cursor: default;
+	background-color: #f4f4f4;
+	color: #bbb;
+	}
+
+.leaflet-touch .leaflet-bar a {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	}
+.leaflet-touch .leaflet-bar a:first-child {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	}
+.leaflet-touch .leaflet-bar a:last-child {
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	}
+
+/* zoom control */
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+	font: bold 18px 'Lucida Console', Monaco, monospace;
+	text-indent: 1px;
+	}
+
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
+	font-size: 22px;
+	}
+
+
+/* layers control */
+
+.leaflet-control-layers {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;
+	}
+.leaflet-control-layers-toggle {
+	background-image: url(images/layers.png);
+	width: 36px;
+	height: 36px;
+	}
+.leaflet-retina .leaflet-control-layers-toggle {
+	background-image: url(images/layers-2x.png);
+	background-size: 26px 26px;
+	}
+.leaflet-touch .leaflet-control-layers-toggle {
+	width: 44px;
+	height: 44px;
+	}
+.leaflet-control-layers .leaflet-control-layers-list,
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+	display: none;
+	}
+.leaflet-control-layers-expanded .leaflet-control-layers-list {
+	display: block;
+	position: relative;
+	}
+.leaflet-control-layers-expanded {
+	padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;
+	}
+.leaflet-control-layers-scrollbar {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding-right: 5px;
+	}
+.leaflet-control-layers-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+	}
+.leaflet-control-layers label {
+	display: block;
+	font-size: 13px;
+	font-size: 1.08333em;
+	}
+.leaflet-control-layers-separator {
+	height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;
+	}
+
+/* Default icon URLs */
+.leaflet-default-icon-path { /* used only in path-guessing heuristic, see L.Icon.Default */
+	background-image: url(images/marker-icon.png);
+	}
+
+
+/* attribution and scale controls */
+
+.leaflet-container .leaflet-control-attribution {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	margin: 0;
+	}
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+	padding: 0 5px;
+	color: #333;
+	line-height: 1.4;
+	}
+.leaflet-control-attribution a {
+	text-decoration: none;
+	}
+.leaflet-control-attribution a:hover,
+.leaflet-control-attribution a:focus {
+	text-decoration: underline;
+	}
+.leaflet-attribution-flag {
+	display: inline !important;
+	vertical-align: baseline !important;
+	width: 1em;
+	height: 0.6669em;
+	}
+.leaflet-left .leaflet-control-scale {
+	margin-left: 5px;
+	}
+.leaflet-bottom .leaflet-control-scale {
+	margin-bottom: 5px;
+	}
+.leaflet-control-scale-line {
+	border: 2px solid #777;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	white-space: nowrap;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.8);
+	text-shadow: 1px 1px #fff;
+	}
+.leaflet-control-scale-line:not(:first-child) {
+	border-top: 2px solid #777;
+	border-bottom: none;
+	margin-top: -2px;
+	}
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {
+	border-bottom: 2px solid #777;
+	}
+
+.leaflet-touch .leaflet-control-attribution,
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	box-shadow: none;
+	}
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;
+	}
+
+
+/* popup */
+
+.leaflet-popup {
+	position: absolute;
+	text-align: center;
+	margin-bottom: 20px;
+	}
+.leaflet-popup-content-wrapper {
+	padding: 1px;
+	text-align: left;
+	border-radius: 12px;
+	}
+.leaflet-popup-content {
+	margin: 13px 24px 13px 20px;
+	line-height: 1.3;
+	font-size: 13px;
+	font-size: 1.08333em;
+	min-height: 1px;
+	}
+.leaflet-popup-content p {
+	margin: 17px 0;
+	margin: 1.3em 0;
+	}
+.leaflet-popup-tip-container {
+	width: 40px;
+	height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-top: -1px;
+	margin-left: -20px;
+	overflow: hidden;
+	pointer-events: none;
+	}
+.leaflet-popup-tip {
+	width: 17px;
+	height: 17px;
+	padding: 1px;
+
+	margin: -10px auto 0;
+	pointer-events: auto;
+
+	-webkit-transform: rotate(45deg);
+	   -moz-transform: rotate(45deg);
+	    -ms-transform: rotate(45deg);
+	        transform: rotate(45deg);
+	}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	background: white;
+	color: #333;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	}
+.leaflet-container a.leaflet-popup-close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	text-align: center;
+	width: 24px;
+	height: 24px;
+	font: 16px/24px Tahoma, Verdana, sans-serif;
+	color: #757575;
+	text-decoration: none;
+	background: transparent;
+	}
+.leaflet-container a.leaflet-popup-close-button:hover,
+.leaflet-container a.leaflet-popup-close-button:focus {
+	color: #585858;
+	}
+.leaflet-popup-scrolled {
+	overflow: auto;
+	}
+
+.leaflet-oldie .leaflet-popup-content-wrapper {
+	-ms-zoom: 1;
+	}
+.leaflet-oldie .leaflet-popup-tip {
+	width: 24px;
+	margin: 0 auto;
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+	}
+
+.leaflet-oldie .leaflet-control-zoom,
+.leaflet-oldie .leaflet-control-layers,
+.leaflet-oldie .leaflet-popup-content-wrapper,
+.leaflet-oldie .leaflet-popup-tip {
+	border: 1px solid #999;
+	}
+
+
+/* div icon */
+
+.leaflet-div-icon {
+	background: #fff;
+	border: 1px solid #666;
+	}
+
+
+/* Tooltip */
+/* Base styles for the element that has a tooltip */
+.leaflet-tooltip {
+	position: absolute;
+	padding: 6px;
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	color: #222;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+	}
+.leaflet-tooltip.leaflet-interactive {
+	cursor: pointer;
+	pointer-events: auto;
+	}
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	position: absolute;
+	pointer-events: none;
+	border: 6px solid transparent;
+	background: transparent;
+	content: "";
+	}
+
+/* Directions */
+
+.leaflet-tooltip-bottom {
+	margin-top: 6px;
+}
+.leaflet-tooltip-top {
+	margin-top: -6px;
+}
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-top:before {
+	left: 50%;
+	margin-left: -6px;
+	}
+.leaflet-tooltip-top:before {
+	bottom: 0;
+	margin-bottom: -12px;
+	border-top-color: #fff;
+	}
+.leaflet-tooltip-bottom:before {
+	top: 0;
+	margin-top: -12px;
+	margin-left: -6px;
+	border-bottom-color: #fff;
+	}
+.leaflet-tooltip-left {
+	margin-left: -6px;
+}
+.leaflet-tooltip-right {
+	margin-left: 6px;
+}
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	top: 50%;
+	margin-top: -6px;
+	}
+.leaflet-tooltip-left:before {
+	right: 0;
+	margin-right: -12px;
+	border-left-color: #fff;
+	}
+.leaflet-tooltip-right:before {
+	left: 0;
+	margin-left: -12px;
+	border-right-color: #fff;
+	}
+
+/* Printing */
+
+@media print {
+	/* Prevent printers from removing background-images of controls. */
+	.leaflet-control {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		}
+	}
+
+</style>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <style>
   :root {
@@ -905,6 +1568,47 @@
     0% { transform: scale(0.8); opacity: 0.4; }
     100% { transform: scale(2); opacity: 0; }
   }
+
+  [hidden] { display:none !important; }
+  /* ===== City tabs (釜山 / 首爾) ===== */
+  .city-tabs { display:flex; gap:4px; padding:3px; background:rgba(42,37,34,0.06); border-radius:999px; flex:none; }
+  .city-tab { border:0; background:transparent; font:inherit; font-family:"Noto Serif TC",serif; font-weight:700;
+    font-size:15px; color:var(--c-ink-soft); padding:6px 16px; border-radius:999px; cursor:pointer; transition:all .2s; }
+  .city-tab:hover { color:var(--c-maple-deep); }
+  .city-tab[aria-selected="true"] { background:var(--c-paper); color:var(--c-maple-deep); box-shadow:0 1px 4px rgba(42,37,34,0.12); }
+  .city-tab:focus-visible { outline:2px solid var(--c-maple); outline-offset:2px; }
+  .city-tab small { font-family:"Noto Sans TC",sans-serif; font-weight:400; font-size:11px; margin-left:4px; opacity:.75; }
+  .topnav-left { display:flex; align-items:center; gap:14px; min-width:0; }
+  @media (max-width:520px){ .topnav-brand .brand-text{ display:none; } .city-tab{ padding:6px 12px; } }
+
+  /* ===== Seoul tab ===== */
+  .seoul-hero { background:
+      radial-gradient(ellipse at top left, rgba(232,181,71,0.26), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(47,93,78,0.14), transparent 55%),
+      linear-gradient(180deg, var(--c-mist) 0%, var(--c-paper) 100%); }
+  .day-card[data-day="s0"] .day-header { background: linear-gradient(135deg, #5C7C9A 0%, #3F5C75 100%); }
+  .day-card[data-day="s1"] .day-header { background: linear-gradient(135deg, #3E6E5E 0%, #2A5144 100%); }
+  .day-card[data-day="s2"] .day-header { background: linear-gradient(135deg, #E8B547 0%, #C9933A 100%); color:#3D2D0F; }
+  .day-card[data-day="s3"] .day-header { background: linear-gradient(135deg, #C9472B 0%, #8B2E1B 100%); }
+  .day-card[data-day="s4"] .day-header { background: linear-gradient(135deg, #7A6A8E 0%, #5B4D6D 100%); }
+  .stop-icon.s0 { background:#5C7C9A; } .stop-icon.s1 { background:#3E6E5E; }
+  .stop-icon.s2 { background:#E8B547; color:var(--c-ink); } .stop-icon.s3 { background:#C9472B; } .stop-icon.s4 { background:#7A6A8E; }
+  .badge.ginkgo { background: rgba(232,181,71,0.28); color:#7a5a0e; }
+  .badge.maple { background: rgba(201,71,43,0.14); color: var(--c-maple-deep); }
+  .badge.tbd { background: transparent; border:1px dashed var(--c-ink-soft); color: var(--c-ink-soft); }
+  .badge.pick { background: rgba(47,93,78,0.14); color:#2A5144; }
+  .badge.done { background:#3E6E5E; color:white; }
+  .seoul-alt { margin-top:14px; padding:14px 18px; border-radius:12px; background:rgba(232,181,71,0.12); border:1px dashed #C9933A; }
+  .seoul-alt p { margin:4px 0 0; font-size:14px; color:var(--c-ink); }
+  .topnav-links a, .topnav-brand { white-space: nowrap; }
+  @media (max-width: 1180px) { .topnav-links { display: none; } }
+  .booked-head { font-size:18px; margin:0 0 12px; color:#2A5144; }
+  .booked-head.todo-head { margin-top:28px; color:var(--c-ink); }
+  .booked-grid { margin-bottom:4px; }
+  .checklist-card.booked-card { background:#EEF4F1; border-color:#B9D2C7; }
+  .checklist-card.booked-card .checklist-when { color:#2A5144; }
+  .checklist-card.done-card { opacity:.7; }
+  .checklist-card.done-card h4 { text-decoration: line-through; text-decoration-color: rgba(42,37,34,.35); }
 </style>
 </head>
 <body>
@@ -912,11 +1616,17 @@
 <!-- ============ TOP NAV ============ -->
 <nav class="topnav">
   <div class="topnav-inner">
-    <a href="#top" class="topnav-brand">
-      <span class="dot"></span>
-      <span>釜山 4 Days · 2026 秋</span>
-    </a>
-    <div class="topnav-links">
+    <div class="topnav-left">
+      <a href="#top" class="topnav-brand">
+        <span class="dot"></span>
+        <span class="brand-text">韓國 2026 秋</span>
+      </a>
+      <div class="city-tabs" role="tablist" aria-label="城市">
+        <button class="city-tab" role="tab" id="tabbtn-busan" aria-controls="tab-busan" aria-selected="true" data-city="busan">釜山<small>10/23–27</small></button>
+        <button class="city-tab" role="tab" id="tabbtn-seoul" aria-controls="tab-seoul" aria-selected="false" data-city="seoul">首爾<small>10/27–31</small></button>
+      </div>
+    </div>
+    <div class="topnav-links" data-city="busan">
       <a href="#map">路線地圖</a>
       <a href="#day-0">10/23</a>
       <a href="#day-1">10/24</a>
@@ -926,9 +1636,18 @@
       <a href="#checklist">行前清單</a>
       <a href="#pass">Pass 清單</a>
     </div>
+    <div class="topnav-links" data-city="seoul" hidden>
+      <a href="#seoul-1027">10/27</a>
+      <a href="#seoul-1028">10/28</a>
+      <a href="#seoul-1029">10/29</a>
+      <a href="#seoul-1030">10/30</a>
+      <a href="#seoul-1031">10/31</a>
+      <a href="#seoul-checklist">行前清單</a>
+    </div>
   </div>
 </nav>
 
+<div class="tab-panel" id="tab-busan">
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
   <div class="hero-inner">
@@ -1002,13 +1721,13 @@
           <span class="swatch" style="background:var(--day-0)"></span>10/23 抵達
         </button>
         <button class="day-chip" data-day="1">
-          <span class="swatch" style="background:var(--day-1)"></span>10/24 海雲台 + 無人機
+          <span class="swatch" style="background:var(--day-1)"></span>10/24 甘川 + 松島 + Spa + 無人機
         </button>
         <button class="day-chip" data-day="2">
-          <span class="swatch" style="background:var(--day-2)"></span>10/25 影島海女
+          <span class="swatch" style="background:var(--day-2)"></span>10/25 影島慢遊
         </button>
         <button class="day-chip" data-day="3">
-          <span class="swatch" style="background:var(--day-3)"></span>10/26 甘川 + 松島 + Spa
+          <span class="swatch" style="background:var(--day-3)"></span>10/26 海雲台列車日
         </button>
         <button class="day-chip" data-day="4">
           <span class="swatch" style="background:var(--day-4)"></span>10/27 KTX 走
@@ -1050,6 +1769,35 @@
       </div>
       <p>含全部需要事前訂位的票券、餐廳，及不用訂但要先知道的提醒。按時間順序整理。</p>
     </div>
+    <h3 class="booked-head">✓ 已訂好</h3>
+    <div class="checklist-grid booked-grid">
+      <div class="checklist-card booked-card">
+        <div class="checklist-when">全程 · KKday</div>
+        <h4>🎫 Visit Busan Pass</h4>
+        <p>BIG 5 Pass 已購買。</p>
+      </div>
+      <div class="checklist-card booked-card">
+        <div class="checklist-when">10/26 (一) · KKday</div>
+        <h4>🚞 Sky Capsule 膠囊列車</h4>
+        <p>已購買，10/26 海雲台列車日搭。</p>
+      </div>
+      <div class="checklist-card booked-card">
+        <div class="checklist-when">全程 · KKday</div>
+        <h4>📶 eSIM</h4>
+        <p>已購買。</p>
+      </div>
+      <div class="checklist-card booked-card">
+        <div class="checklist-when">10/23 (五) 落地晚餐 · Catch Table</div>
+        <h4>🍖 고결 稻草烤肋排</h4>
+        <p>到店用 Catch Table 現場登記候位。</p>
+      </div>
+      <div class="checklist-card booked-card">
+        <div class="checklist-when">10/23 – 10/27</div>
+        <h4>🏨 Hotel GUESS WHO 廣安里</h4>
+        <p>海景房 ×4 晚。</p>
+      </div>
+    </div>
+    <h3 class="booked-head todo-head">還要處理</h3>
     <div class="checklist-grid">
       <div class="checklist-card">
         <div class="checklist-when">行前 1 個月（9/27 開放）</div>
@@ -1061,19 +1809,20 @@
       <div class="checklist-card">
         <div class="checklist-when">行前 2 週（10/10 開放）</div>
         <h4>🚞 Sky Capsule + Beach Train</h4>
-        <p>10/24 兩段都要訂：上午 Beach Train 尾浦→松亭 (₩7,000)、下午 Sky Capsule 青沙浦→尾浦 (₩30,000，4 人膠囊)。週末旺季常售完。</p>
+        <p><strong>✓ Sky Capsule 已在 KKday 買好</strong>（10/26）。Beach Train 還沒訂。</p>
+        <p>10/26（週一）兩段都要訂：上午 Beach Train 尾浦→松亭 (₩7,000)、下午 Sky Capsule 青沙浦→尾浦 (₩30,000，4 人膠囊)。改到平日、人潮少很多，但仍建議先訂。</p>
         <a href="https://www.bluelinepark.com/eng/" target="_blank" rel="noopener">Blueline Park 官網 →</a>
       </div>
       <div class="checklist-card">
         <div class="checklist-when">行前 2 週</div>
-        <h4>🛝 Skyline Luge Busan</h4>
-        <p>10/24 上午 11:15 場。Klook 套票最便宜 (4 趟 Luge + SkyRide 約 NT$700)。週末上午 11 點前先到避開排隊。</p>
-        <a href="https://www.klook.com/zh-TW/activity/9094-skyline-luge-busan/" target="_blank" rel="noopener">Klook 套票 →</a>
+        <h4>🌆 Busan X the SKY 觀景台</h4>
+        <p>10/26（週一）傍晚場，卡日落前上去看白天＋夕陽＋夜景。用 BIG5 Pass 現場換票免費（原價 ₩88,000），不用預約。</p>
+        <a href="https://www.busanxthesky.com/" target="_blank" rel="noopener">Busan X the SKY 官網 →</a>
       </div>
       <div class="checklist-card">
         <div class="checklist-when">行前 2 週</div>
         <h4>🎨 ARTE MUSEUM Busan</h4>
-        <p>10/25 下午 15:30 場。₩30,000 全票。週日下午容易排隊，建議官網或 Klook 預約指定時段。沉浸式體驗約 2h。</p>
+        <p>10/25（日）上午開館場（10:00 一早先衝）。₩30,000 全票。一早人最少，建議官網或 Klook 先預約指定時段。沉浸式體驗約 2h。</p>
         <a href="https://artemuseum.com/BUSAN" target="_blank" rel="noopener">ARTE MUSEUM 官網 →</a>
       </div>
       <div class="checklist-card">
@@ -1085,19 +1834,19 @@
       <div class="checklist-card">
         <div class="checklist-when">行前 1 週</div>
         <h4>🚡 松島海上纜車（水晶車廂）</h4>
-        <p>10/26 下午 15:00。水晶車廂 ₩17,000 來回。Klook 有 8% 折扣 + 掃 QR 直接入場，省排隊。</p>
+        <p>10/24（六）午後 14:00 場。水晶車廂 ₩17,000 來回。Klook 有 8% 折扣 + 掃 QR 直接入場，省排隊。</p>
         <a href="https://busanaircruise.com/" target="_blank" rel="noopener">官網 →</a>
       </div>
       <div class="checklist-card">
         <div class="checklist-when">行前 1 週</div>
         <h4>🛀 Spa Land 汗蒸幕（選訂）</h4>
-        <p>10/26 晚 17:30。₩20,000 / 4 小時。可現場買，但 Klook 預訂約 8% 折扣，直接 QR 入場。</p>
+        <p>10/24（六）傍晚 16:30 進場（泡到約 19:30，趕得上 21:00 無人機秀）。₩20,000 / 4 小時。可現場買，但 Klook 預訂約 8% 折扣，直接 QR 入場。</p>
         <a href="https://www.klook.com/zh-TW/activity/3074-spa-land-busan/" target="_blank" rel="noopener">Klook 折扣 →</a>
       </div>
       <div class="checklist-card">
         <div class="checklist-when">行前 3 天</div>
         <h4>📱 叫車 App 雙保險</h4>
-        <p><strong>Uber</strong> 用台灣同帳號即可（市區 OK，含 Skyline Luge 區）。<strong>Kakao T</strong> 用台灣門號註冊備用（郊區更穩）。Day 0 機場接送靠 Uber。</p>
+        <p><strong>Uber</strong> 用台灣同帳號即可（市區都 OK）。<strong>Kakao T</strong> 用台灣門號註冊備用（郊區更穩）。Day 0 機場接送靠 Uber。</p>
       </div>
       <div class="checklist-card">
         <div class="checklist-when">行前 1 天</div>
@@ -1158,14 +1907,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td class="mark"></td><td class="name">Busan X the SKY 觀景台</td><td class="area">海雲台</td><td class="price">₩88,000</td><td class="link"><a href="https://www.busanxthesky.com/" target="_blank" rel="noopener">官網</a></td></tr>
+          <tr class="selected"><td class="mark">✅</td><td class="name">Busan X the SKY 觀景台</td><td class="area">海雲台</td><td class="price">₩88,000</td><td class="link"><a href="https://www.busanxthesky.com/" target="_blank" rel="noopener">官網</a></td></tr>
           <tr><td class="mark"></td><td class="name">釜山樂天世界 Lotte World</td><td class="area">機張</td><td class="price">₩58,000</td><td class="link"><a href="https://adventurebusan.lotteworld.com/" target="_blank" rel="noopener">官網</a></td></tr>
           <tr><td class="mark"></td><td class="name">跆拳道 大榮體驗</td><td class="area">廣安里</td><td class="price">₩50,000</td><td class="link"><a href="https://www.klook.com/zh-TW/search?keyword=%E9%87%9C%E5%B1%B1+%E8%B7%86%E6%8B%B3%E9%81%93" target="_blank" rel="noopener">Klook</a></td></tr>
           <tr><td class="mark"></td><td class="name">衝浪者 松亭店 SURFYY</td><td class="area">松亭</td><td class="price">₩40,000</td><td class="link"><a href="https://surfyy.com/" target="_blank" rel="noopener">官網</a></td></tr>
           <tr><td class="mark"></td><td class="name">衝浪者 多大浦店</td><td class="area">影島</td><td class="price">₩40,000</td><td class="link"><a href="https://surfyy.com/" target="_blank" rel="noopener">官網</a></td></tr>
           <tr class="recommend"><td class="mark">⭐</td><td class="name">釜山遊艇 鑽石灣 Yacht</td><td class="area">廣安里</td><td class="price">₩31,000</td><td class="link"><a href="https://www.klook.com/zh-TW/search?keyword=%E9%87%9C%E5%B1%B1+%E9%81%8A%E8%89%87" target="_blank" rel="noopener">Klook</a></td></tr>
           <tr><td class="mark"></td><td class="name">ClubD Oasis Spa 水樂園+汗蒸</td><td class="area">海雲台</td><td class="price">₩25,000</td><td class="link"><a href="https://www.klook.com/zh-TW/search?keyword=ClubD+Oasis" target="_blank" rel="noopener">Klook</a></td></tr>
-          <tr class="selected"><td class="mark">✅</td><td class="name">Skyline Luge 釜山</td><td class="area">機張</td><td class="price">₩24,000</td><td class="link"><a href="https://www.skylineluge.com/en/busan/" target="_blank" rel="noopener">官網</a></td></tr>
+          <tr><td class="mark"></td><td class="name">Skyline Luge 釜山</td><td class="area">機張</td><td class="price">₩24,000</td><td class="link"><a href="https://www.skylineluge.com/en/busan/" target="_blank" rel="noopener">官網</a></td></tr>
           <tr class="selected"><td class="mark">✅</td><td class="name">Spa Land Centum City 汗蒸幕</td><td class="area">海雲台</td><td class="price">₩18,000</td><td class="link"><a href="https://www.klook.com/zh-TW/search?keyword=Spa+Land+Centum+City" target="_blank" rel="noopener">Klook</a></td></tr>
           <tr><td class="mark"></td><td class="name">Hotel Aqua Palace Spa</td><td class="area">廣安里</td><td class="price">₩18,000</td><td class="link"><a href="https://www.klook.com/zh-TW/search?keyword=Aqua+Palace+Spa" target="_blank" rel="noopener">Klook</a></td></tr>
           <tr><td class="mark"></td><td class="name">釜山觀光巴士 City Tour</td><td class="area">釜山站</td><td class="price">₩18,000</td><td class="link"><a href="https://www.klook.com/zh-TW/search?keyword=%E9%87%9C%E5%B1%B1%E8%A7%80%E5%85%89%E5%B7%B4%E5%A3%AB" target="_blank" rel="noopener">Klook</a></td></tr>
@@ -1222,12 +1971,366 @@
   </div>
 </section>
 
+</div>
+
+<!-- ============ SEOUL TAB ============ -->
+<div class="tab-panel" id="tab-seoul" hidden>
+<header class="hero seoul-hero" id="seoul-top">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Seoul · 2026 Autumn</div>
+    <h1>
+      在 <span class="accent">南怡島</span><br/>
+      走一段<br/>
+      秋天的銀杏路
+    </h1>
+    <p class="hero-sub">
+      從釜山北上，弘大當基地住 4 晚。剪髮、聖水吃喝、南怡島看銀杏楓葉、汝矣島醬蟹配漢江夕陽、明洞逛街，最後一天在延南洞慢慢買完再去機場。
+    </p>
+    <div class="hero-meta">
+      <div class="meta-card">
+        <div class="meta-card-label">DATES</div>
+        <div class="meta-card-value">10.27 – 10.31<small>4 晚 · 3 完整天</small></div>
+      </div>
+      <div class="meta-card">
+        <div class="meta-card-label">FROM</div>
+        <div class="meta-card-value">釜山 → 首爾<small>10/27 下午出發 · 晚上抵達</small></div>
+      </div>
+      <div class="meta-card">
+        <div class="meta-card-label">BASE</div>
+        <div class="meta-card-value">hetras 弘大店<small>櫃台開到 22:30 · ×4 晚</small></div>
+      </div>
+      <div class="meta-card">
+        <div class="meta-card-label">HOME</div>
+        <div class="meta-card-value">10/31 回台<small>回弘大拿行李 → 機場</small></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="seoul-timeline-section">
+  <div class="section-inner">
+    <div class="section-head">
+      <div style="flex-basis:100%">
+        <div class="section-tag">Itinerary</div>
+        <h2>每日完整行程</h2>
+      </div>
+      <p>每站附 Google 地圖搜尋連結。標「待定」的還沒決定，「二選一」是超市 A／B 擇一。</p>
+    </div>
+
+    <div class="timeline">
+
+      <article class="day-card" data-day="s0" id="seoul-1027">
+        <div class="day-header">
+          <div class="day-header-meta">Day 4 · 10/27 (二)</div>
+          <h3>抵達首爾 · 弘大宵夜</h3>
+          <div class="day-header-sub">釜山下午出發 → 晚上到弘大 → check-in → 宵夜</div>
+        </div>
+        <div class="day-body"><div class="stops">
+          <div class="stop">
+            <div class="stop-time">晚上<small>STOP 1</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s0">🏨</span>入住 hetras 弘大店<span class="stop-badges"><span class="badge transport">🏨 住宿</span></span></div>
+              <div class="stop-desc">櫃台開到 <strong>22:30</strong>，怕趕不上就先跟飯店說會晚到。</div>
+              <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=hetras%20Hongdae%20Seoul" target="_blank" rel="noopener">在 Google 地圖打開</a></div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">宵夜<small>STOP 2</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s0">🍳</span>할매기름집 煎餅 或 林間路肉舖<span class="stop-badges"><span class="badge food">🍽 美食</span><span class="badge tbd">二擇一待定</span></span></div>
+              <div class="stop-desc">到了看時間跟肚子再決定。</div>
+              <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=%ED%95%A0%EB%A7%A4%EA%B8%B0%EB%A6%84%EC%A7%91" target="_blank" rel="noopener">할매기름집</a>　<a href="https://www.google.com/maps/search/?api=1&query=%E6%9E%97%E9%96%93%E8%B7%AF%E8%82%89%E8%88%96%20%E9%A6%96%E7%88%BE" target="_blank" rel="noopener">林間路肉舖</a></div>
+            </div>
+          </div>
+        </div></div>
+      </article>
+
+      <article class="day-card" data-day="s1" id="seoul-1028">
+        <div class="day-header">
+          <div class="day-header-meta">Day 5 · 10/28 (三)</div>
+          <h3>弘大剪髮 · 聖水吃一整天</h3>
+          <div class="day-header-sub">弘大 → 聖水 → 首爾林 → 新堂白松韓牛</div>
+        </div>
+        <div class="day-body"><div class="stops">
+          <div class="stop">
+            <div class="stop-time">早餐<small>STOP 1</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s1">🥪</span>Egg Drop 夾蛋吐司<span class="stop-badges"><span class="badge food">🍽 美食</span></span></div>
+              <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=Egg%20Drop%20Hongdae" target="_blank" rel="noopener">在 Google 地圖打開</a></div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">10:30<small>STOP 2</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s1">✂</span>弘大剪髮</div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">午餐<small>STOP 3</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s1">🍲</span>聖水排骨湯 소문난성수감자탕<span class="stop-badges"><span class="badge food">🍽 美食</span></span></div>
+              <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=%EC%86%8C%EB%AC%B8%EB%82%9C%EC%84%B1%EC%88%98%EA%B0%90%EC%9E%90%ED%83%95" target="_blank" rel="noopener">在 Google 地圖打開</a></div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">下午茶<small>STOP 4</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s1">🍦</span>聖水甜點巡禮<span class="stop-badges"><span class="badge food">🍽 美食</span></span></div>
+              <div class="stop-desc">松露蜂蜜帕尼尼、自然島鹽麵包、開心果冰淇淋。</div>
+              <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=%EC%9E%90%EC%97%B0%EB%8F%84%EC%86%8C%EA%B8%88%EB%B9%B5%20%EC%84%B1%EC%88%98" target="_blank" rel="noopener">自然島鹽麵包</a></div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">下午<small>STOP 5</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s1">🍂</span>首爾林散步 + 逛聖水<span class="stop-badges"><span class="badge ginkgo">🍂 銀杏</span><span class="badge tbd">店家待定</span></span></div>
+              <div class="stop-desc">首爾林散步後回聖水逛 EPT，其他想逛的店還沒定。</div>
+              <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=%EC%84%9C%EC%9A%B8%EC%88%B2" target="_blank" rel="noopener">首爾林</a></div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">20:00<small>STOP 6</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s1">🥩</span>新堂白松韓牛<span class="stop-badges"><span class="badge food">🍽 美食</span><span class="badge done">✓ 已訂 · Catch Table</span></span></div>
+              <div class="stop-desc"><strong>20:00</strong> Catch Table 訂位。</div>
+              <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=%E6%96%B0%E5%A0%82%20%E7%99%BD%E6%9D%BE%20%E9%9F%93%E7%89%9B" target="_blank" rel="noopener">在 Google 地圖打開</a></div>
+            </div>
+          </div>
+        </div></div>
+      </article>
+
+      <article class="day-card" data-day="s2" id="seoul-1029">
+        <div class="day-header">
+          <div class="day-header-meta">Day 6 · 10/29 (四)</div>
+          <h3>南怡島一日 · 銀杏與楓葉</h3>
+          <div class="day-header-sub">南怡島 → 回合井超市採買 → TÉTO</div>
+        </div>
+        <div class="day-body"><div class="stops">
+          <div class="stop">
+            <div class="stop-time">全天<small>STOP 1</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s2">🍁</span>南怡島<span class="stop-badges"><span class="badge must">★ 主題收集</span><span class="badge ginkgo">🍂 銀杏</span><span class="badge maple">🍁 楓葉</span></span></div>
+              <div class="stop-transport">🚆 ITX-青春號到加平站 → 計程車到加平碼頭 → 渡輪上島</div>
+              <div class="stop-desc">松坡銀杏樹路、楓葉林。</div>
+              <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=%EB%82%A8%EC%9D%B4%EC%84%AC" target="_blank" rel="noopener">在 Google 地圖打開</a></div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">傍晚<small>STOP 2</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s2">🛒</span>超市 A：合井 Homeplus<span class="stop-badges"><span class="badge pick">二選一</span></span></div>
+              <div class="stop-desc">伴手禮／食物採買，離住宿近。<strong>退稅要現場確認。</strong></div>
+              <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=%ED%99%88%ED%94%8C%EB%9F%AC%EC%8A%A4%20%ED%95%A9%EC%A0%95%EC%A0%90" target="_blank" rel="noopener">在 Google 地圖打開</a></div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">晚上<small>STOP 3</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s2">✨</span>TÉTO</div>
+              <div class="stop-desc">晚餐 <span class="badge tbd">待定</span> 隨意吃。</div>
+            </div>
+          </div>
+          <div class="seoul-alt">
+            <strong>☔ 備案：10/25 看銀杏還沒黃就換這條</strong>
+            <p>🍂 德壽宮石牆路 → 國立古宮博物館 → 🍂 三清洞</p>
+            <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=%EB%8D%95%EC%88%98%EA%B6%81%20%EB%8F%8C%EB%8B%B4%EA%B8%B8" target="_blank" rel="noopener">德壽宮石牆路</a>　<a href="https://www.google.com/maps/search/?api=1&query=%EA%B5%AD%EB%A6%BD%EA%B3%A0%EA%B6%81%EB%B0%95%EB%AC%BC%EA%B4%80" target="_blank" rel="noopener">國立古宮博物館</a>　<a href="https://www.google.com/maps/search/?api=1&query=%EC%82%BC%EC%B2%AD%EB%8F%99" target="_blank" rel="noopener">三清洞</a></div>
+          </div>
+        </div></div>
+      </article>
+
+      <article class="day-card" data-day="s3" id="seoul-1030">
+        <div class="day-header">
+          <div class="day-header-meta">Day 7 · 10/30 (五)</div>
+          <h3>花蟹堂醬蟹 · 漢江夕陽 · 明洞</h3>
+          <div class="day-header-sub">汝矣島 → The Hyundai → 漢江公園 → 明洞 → 首爾站 → 機場快線回弘大</div>
+        </div>
+        <div class="day-body"><div class="stops">
+          <div class="stop">
+            <div class="stop-time">11:00<small>STOP 1</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s3">🧄</span>神之大蒜麵包<span class="stop-badges"><span class="badge food">🍽 可考慮</span></span></div>
+              <div class="stop-desc">11:00 開門，當早餐。</div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">13:30<small>STOP 2</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s3">🦀</span>花蟹堂 · 汝矣島醬蟹<span class="stop-badges"><span class="badge food">🍽 美食</span><span class="badge done">✓ 已訂 · Creatrip</span></span></div>
+              <div class="stop-desc"><strong>13:30</strong> Creatrip 訂位。</div>
+              <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=%E8%8A%B1%E8%9F%B9%E5%A0%82%20%E6%B1%9D%E7%9F%A3%E5%B3%B6" target="_blank" rel="noopener">在 Google 地圖打開</a></div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">下午<small>STOP 3</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s3">🌇</span>The Hyundai Seoul → 漢江公園看夕陽</div>
+              <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=%EB%8D%94%ED%98%84%EB%8C%80%20%EC%84%9C%EC%9A%B8" target="_blank" rel="noopener">The Hyundai Seoul</a>　<a href="https://www.google.com/maps/search/?api=1&query=%EC%97%AC%EC%9D%98%EB%8F%84%ED%95%9C%EA%B0%95%EA%B3%B5%EC%9B%90" target="_blank" rel="noopener">汝矣島漢江公園</a></div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">晚上<small>STOP 4</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s3">🧢</span>明洞晚餐、逛街</div>
+              <div class="stop-desc">emis 買帽子。</div>
+              <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=emis%20Myeongdong" target="_blank" rel="noopener">emis 明洞</a></div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">晚上<small>STOP 5</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s3">🛒</span>超市 B：首爾站樂天超市<span class="stop-badges"><span class="badge pick">二選一</span></span></div>
+              <div class="stop-desc">伴手禮／食物採買，<strong>可退稅</strong>，10:00–23:00。</div>
+              <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=%EB%A1%AF%EB%8D%B0%EB%A7%88%ED%8A%B8%20%EC%84%9C%EC%9A%B8%EC%97%AD%EC%A0%90" target="_blank" rel="noopener">在 Google 地圖打開</a></div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">回程<small>STOP 6</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s3">🚆</span>機場快線回弘大<span class="stop-badges"><span class="badge transport">🚆 交通</span></span></div>
+              <div class="stop-transport">🚆 首爾站 → 弘大入口站（機場快線 AREX 一般列車）</div>
+            </div>
+          </div>
+        </div></div>
+      </article>
+
+      <article class="day-card" data-day="s4" id="seoul-1031">
+        <div class="day-header">
+          <div class="day-header-meta">Day 8 · 10/31 (六)</div>
+          <h3>弘大收尾 · 延南洞掃街</h3>
+          <div class="day-header-sub">延南洞小店 → 回 hetras 拿行李 → 機場</div>
+        </div>
+        <div class="day-body"><div class="stops">
+          <div class="stop">
+            <div class="stop-time">早午餐<small>STOP 1</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s4">☕</span>早午餐<span class="stop-badges"><span class="badge tbd">待定</span></span></div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">白天<small>STOP 2</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s4">🛍</span>延南洞小店掃街</div>
+              <div class="stop-desc">墨鏡、衣服、NB 瑪莉珍、EPT、ADER。</div>
+              <div class="stop-meta">📍 <a href="https://www.google.com/maps/search/?api=1&query=%EC%97%B0%EB%82%A8%EB%8F%99" target="_blank" rel="noopener">延南洞</a></div>
+            </div>
+          </div>
+          <div class="stop">
+            <div class="stop-time">離開<small>STOP 3</small></div>
+            <div class="stop-body">
+              <div class="stop-name"><span class="stop-icon s4">✈</span>回 hetras 拿行李 → 機場<span class="stop-badges"><span class="badge transport">✈ 交通</span></span></div>
+            </div>
+          </div>
+        </div></div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="checklist-section" id="seoul-checklist">
+  <div class="section-inner">
+    <div class="section-head">
+      <div style="flex-basis:100%">
+        <div class="section-tag">Pre-Trip</div>
+        <h2>首爾行前清單</h2>
+      </div>
+      <p>照時間排，還沒決定的也放這裡。</p>
+    </div>
+    <h3 class="booked-head">✓ 已訂好</h3>
+    <div class="checklist-grid booked-grid">
+      <div class="checklist-card booked-card">
+        <div class="checklist-when">10/28 (三) 20:00 · Catch Table</div>
+        <h4>🥩 新堂白松韓牛</h4>
+        <p>晚餐訂位完成。</p>
+      </div>
+      <div class="checklist-card booked-card">
+        <div class="checklist-when">10/30 (五) 13:30 · Creatrip</div>
+        <h4>🦀 花蟹堂</h4>
+        <p>汝矣島醬蟹午餐訂位完成。</p>
+      </div>
+      <div class="checklist-card booked-card">
+        <div class="checklist-when">全程 · KKday</div>
+        <h4>📶 eSIM</h4>
+        <p>已購買。</p>
+      </div>
+    </div>
+    <h3 class="booked-head todo-head">還要處理</h3>
+    <div class="checklist-grid">
+      <div class="checklist-card">
+        <div class="checklist-when">10/25</div>
+        <h4>🍂 看南怡島銀杏狀況</h4>
+        <p>還沒黃就把 10/29 換成德壽宮石牆路 → 國立古宮博物館 → 三清洞。</p>
+      </div>
+      <div class="checklist-card">
+        <div class="checklist-when">10/27 前</div>
+        <h4>🏨 通知 hetras 會晚到</h4>
+        <p>櫃台開到 22:30，從釜山晚上才到，先留訊息比較保險。</p>
+      </div>
+      <div class="checklist-card">
+        <div class="checklist-when">出發前</div>
+        <h4>🛒 超市 A 還是 B</h4>
+        <p>A 合井 Homeplus 離住宿近，退稅要現場確認；B 首爾站樂天可退稅，10:00–23:00。選 A 的話 10/30 晚上可從明洞直接回弘大。</p>
+      </div>
+      <div class="checklist-card">
+        <div class="checklist-when">出發前</div>
+        <h4>✈ 確認 10/31 回程航班時間</h4>
+        <p>決定延南洞能逛多久、幾點回飯店拿行李。</p>
+      </div>
+      <div class="checklist-card">
+        <div class="checklist-when">待定</div>
+        <h4>📝 還沒決定的</h4>
+        <p>10/27 宵夜二選一、10/28 聖水其他店、10/29 晚餐、10/31 早午餐。</p>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
 <!-- ============ FOOTER ============ -->
 <footer>
-  <div>釜山 4 天行程 · 廣安大橋下的秋日散策 · 2026.10.23 – 10.27</div>
+  <div>韓國秋旅 · 釜山 10.23 – 10.27 · 首爾 10.27 – 10.31 · 2026</div>
   <div style="margin-top:6px; font-size:12px;">Made with <span class="heart">♡</span> · 互動地圖 by Leaflet & OpenStreetMap</div>
 </footer>
 
+<script>
+// ============== City tabs ==============
+const SEOUL_ANCHORS = ['seoul','seoul-top','seoul-1027','seoul-1028','seoul-1029','seoul-1030','seoul-1031','seoul-checklist'];
+function showCity(city, opts = {}) {
+  document.querySelectorAll('.city-tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.city === city)));
+  document.getElementById('tab-busan').hidden = city !== 'busan';
+  document.getElementById('tab-seoul').hidden = city !== 'seoul';
+  document.querySelectorAll('.topnav-links').forEach(n => n.hidden = n.dataset.city !== city);
+  if (city === 'busan') setTimeout(() => { try { map.invalidateSize(); } catch (e) {} }, 0);
+  if (opts.scrollTop) window.scrollTo({ top: 0 });
+  try { localStorage.setItem('trip-city', city); } catch (e) {}
+}
+document.querySelectorAll('.city-tab').forEach(b => b.addEventListener('click', () => showCity(b.dataset.city, { scrollTop: true })));
+document.querySelector('.topnav-brand').addEventListener('click', e => {
+  e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+function cityFromHash() {
+  const h = location.hash.replace('#','');
+  if (!h) return null;
+  if (SEOUL_ANCHORS.includes(h)) return 'seoul';
+  if (h === 'busan' || document.querySelector('#tab-busan #' + CSS.escape(h))) return 'busan';
+  return null;
+}
+window.addEventListener('hashchange', () => {
+  const c = cityFromHash();
+  if (c) {
+    showCity(c);
+    const el = document.getElementById(location.hash.slice(1));
+    if (el && !['seoul','busan'].includes(location.hash.slice(1))) el.scrollIntoView();
+  }
+});
+(function initCity() {
+  let c = cityFromHash();
+  if (!c) { try { c = localStorage.getItem('trip-city'); } catch (e) {} }
+  showCity(c === 'seoul' ? 'seoul' : 'busan');
+  const h = location.hash.slice(1);
+  if (c && h && !['seoul','busan'].includes(h)) { const el = document.getElementById(h); if (el) el.scrollIntoView(); }
+})();
+</script>
 <!-- ============ DATA + MAP SCRIPT ============ -->
 <script>
 const TRIP = [
@@ -1269,7 +2372,7 @@ const TRIP = [
           "🌊 海邊散步看廣安大橋夜燈（整點 +10 分有點燈動畫）",
           "🍖 22:00 走 1 min 到隔壁 고결（光南路 (광남로) 121）吃稻草烤肋排做收尾，最晚 24:00 收"
         ],
-        desc: "21:30 抵達 <strong>Hotel GUESS WHO 猜猜飯店</strong> check-in → 海邊散步看廣安大橋夜燈（整點 +10 分有點燈動畫）→ 走 1 分鐘到隔壁 <strong>고결 廣安里稻草烤肋排</strong>吃 稻草烤五花肉 (짚불삼겹살)（稻草烤五花肉）+ 厚切牛肋骨 (우대갈비)（厚切牛肋骨）做收尾，營業到 24:00。"
+        desc: "<span class=\"badge done\">✓ 고결 用 Catch Table 現場登記候位</span><br/>21:30 抵達 <strong>Hotel GUESS WHO 猜猜飯店</strong> check-in → 海邊散步看廣安大橋夜燈（整點 +10 分有點燈動畫）→ 走 1 分鐘到隔壁 <strong>고결 廣安里稻草烤肋排</strong>吃 稻草烤五花肉 (짚불삼겹살)（稻草烤五花肉）+ 厚切牛肋骨 (우대갈비)（厚切牛肋骨）做收尾，營業到 24:00。"
       }
     ],
     extras: [
@@ -1285,71 +2388,78 @@ const TRIP = [
   {
     day: 1,
     date: "10/24 (六)",
-    title: "海雲台列車日 + 廣安里無人機秀",
-    sub: "Sky Capsule × Beach Train × M Drone Light Show",
+    title: "甘川洞 + 松島纜車 + Spa Land + 無人機秀",
+    sub: "彩色山城 → 海上纜車 → 汗蒸幕 → 廣安里無人機",
     route: [
       [35.1507323, 129.1159064],
-      [35.158284, 129.1727672],
-      [35.1789, 129.2069],
-      [35.1940567, 129.2186386],
-      [35.1789, 129.2069],
-      [35.1613733, 129.1918758],
-      [35.158284, 129.1727672],
+      [35.0973904, 129.0105924],
+      [35.0763876, 129.0236199],
+      [35.16898, 129.13145],
       [35.1555583, 129.1238321],
       [35.1507323, 129.1159064]
     ],
     stops: [
       {
-        time: "09:30 – 13:00",
-        icon: "🛝",
-        name: "海雲台 → Skyline Luge · 去搭 Beach Train",
-        transport: "🚇 飯店 → 廣安站 → 海雲台站 → 走 15 min 到 尾浦站<br/>🚞 尾浦 → Beach Train 海邊列車 (海邊列車✓) 東向 30 min → 松亭海水浴場 (송정해수욕장) · ₩7,000<br/>🚖 송정 → Skyline Luge 計程車 5-10 min · ₩5k",
-        lat: 35.1940567, lng: 129.2186386,
-        gmaps: "https://maps.app.goo.gl/7bkiuyiJwHYGUdff8",
+        time: "09:00 – 13:30",
+        icon: "🎨",
+        name: "一早先衝甘川洞文化村 + 富平午餐",
+        transport: "🚕 飯店 → 甘川洞文化村 · 一早直接 Uber 最省事 30 min · ₩13k<br/>🚇 預算派：광안 2 號線 (2 호선) → 서면換 1 號線 (1 호선) → 土城站 (토성역) + 마을 2 社區小巴上山 · 約 50 min · ₩2,000",
+        lat: 35.0973904, lng: 129.0105924,
+        gmaps: "https://maps.app.goo.gl/16hfH5FjCqP6KHWaA",
         badge: "must",
         transitSteps: [
-          "🚶 09:30 飯店出門往北走 10 min 到 廣安站 (광안역) 3 號出口 (3번 출구)",
-          "🚇 2 號線 (2 호선) 往萇山方向 (綠線)，15 min · 7 站 · ₩1,500 → 海雲台站 (해운대역)",
-          "🚶 海雲台站 5 號出口 (5번 출구) 沿 賞月路 (달맞이길) 上坡走 15 min → 尾浦站 (미포정거장)",
-          "🎫 10:30 尾浦站搭 Beach Train 海邊列車 (單程 ₩7,000，開放式車廂)",
-          "🚞 沿海岸 4 站 30 min (途經 청사포 + 구덕포) → 松亭海水浴場站 (송정해수욕장)",
-          "🚖 11:00 松亭站 → Skyline Luge 釜山店 計程車 5-10 min (₩5k)",
-          "🛝 11:15-12:45 Skyline Luge 斜坡滑車 (多種路線 + 高空 SkyRide，套票 ₩30k+)",
-          "🍱 12:45 松亭海邊餐廳吃午餐"
+          "🚕 08:45 飯店叫 Uber 直上甘川洞（30 min · ₩13k），一早人最少",
+          "🎨 09:30–11:30 慢慢爬慢慢拍：彩色山城、小王子打卡點、裝置藝術",
+          "🚕 11:30 下山叫 Uber 到 富平市場 / 札嘎其（5-10 min · ₩4k）",
+          "🍗 12:00–13:30 午餐：富平市場 巨人炸雞（整雞現炸）或 札嘎其海鮮市場海鮮鍋",
+          "🚕 13:30 出發往松島海上纜車（Uber 15 min · ₩6k）"
         ],
-        desc: "上午主軸換成 <strong>Skyline Luge Busan</strong> (位於 기장 / 松亭延伸區，韓國最受歡迎斜坡滑車)。<strong>Beach Train 海邊列車</strong> (海邊列車✓) 從尾浦一路坐到松亭，順便看海岸線，再計程車到 Luge 玩 1.5h。午餐在松亭海邊解決。<em>備案：不想玩斜坡滑車可改 海雲台沙灘 + X the SKY 98F 觀景台。</em>"
+        desc: "<strong>甘川洞文化村</strong>韓國馬丘比丘，彩色山城聚落 + 小王子打卡點。一早先衝人最少，慢慢爬慢慢拍 2 小時。下山到富平 / 札嘎其區午餐：<strong>巨人炸雞</strong>（60 年老店整雞現炸）或 <strong>札嘎其海鮮市場</strong>海鮮鍋。"
       },
       {
-        time: "13:30 – 17:00",
-        icon: "🚞",
-        name: "回程 · Beach Train + Sky Capsule (空中列車✓)",
-        transport: "🚞 松亭 → Beach Train 西返 → 青沙浦 (15 min · ₩7,000)<br/>🚞 青沙浦 → Sky Capsule 空中列車 (空中列車✓) → 尾浦 (30 min · ₩30,000，提早 1 週訂位)<br/>🚇 海雲台站 → 廣安站 (2 號線 13 min · ₩1,500)",
-        lat: 35.1613733, lng: 129.1918758,
-        gmaps: "https://maps.app.goo.gl/3J1nqJKM69AboivY6",
+        time: "14:00 – 16:00",
+        icon: "🚡",
+        name: "松島海上纜車（水晶車廂）+ 龍宮雲橋",
+        transport: "🚕 富平 / 札嘎其 → 松島海上纜車站 · Uber 直達 15 min · ₩6k<br/>🚌 預算派：札嘎其站 (자갈치역) → 86 / 96 公車到松島 · 約 30 min · ₩1,500",
+        lat: 35.0763876, lng: 129.0236199,
+        gmaps: "https://maps.app.goo.gl/oBsqVyBYqskmGSu38",
         badge: "must",
         transitSteps: [
-          "🚖 13:30 Skyline Luge → 松亭海水浴場站 (計程車 5 min · ₩5k)",
-          "🚞 13:45 松亭 → Beach Train 西返 → 青沙浦站 (청사포정거장) 15 min · ₩7,000",
-          "🚶 14:00–15:00 青沙浦散策：紅白燈塔 + Daritdol 玻璃步道 + Cafe Rooftop 海景咖啡",
-          "🎫 15:00 青沙浦站搭 Sky Capsule (4 人膠囊空中軌道，提早 1 週訂位)",
-          "🚞 Sky Capsule 30 min 沿海岸 → 尾浦站",
-          "🚶 15:30 尾浦走 15 min → 海雲台站 5 號出口 (5번 출구)",
-          "🚇 2 號線 (2 호선) 往양산方向 5 站 13 min → 廣安站",
-          "🏨 16:30 回飯店休息、洗澡準備晚上"
+          "🎫 14:00 松島海上纜車海灣站 (베이정거장) 買水晶車廂來回票 ₩17,000",
+          "🚡 14:15 搭水晶車廂跨海 1.6 km、86 m 高（地板透明俯瞰）→ 松島海水浴場 (송도해수욕장)",
+          "🌉 14:35 下車走 龍宮雲橋 海上玻璃步道（看龍宮岩、拍照 30 min）",
+          "🚡 15:20 搭纜車回 海灣站 (베이정거장)",
+          "🚕 15:45 松島 → 新世界 Centum City Spa Land（Uber 30 min · ₩15k）"
         ],
-        desc: "回程兩種列車一次收：<strong>Beach Train</strong> 從松亭西返青沙浦 (15 min)，下車慢慢走 <strong>紅白燈塔 + Daritdol 玻璃步道</strong>，順便 <strong>Cafe Rooftop</strong> 看海喝咖啡。然後 <strong>Sky Capsule</strong> 空中列車 (空中列車✓) 4 人膠囊高架軌道 30 min 回尾浦。<em>備案：若不去 Skyline Luge，下午改走 海雲台沙灘 + 冬柏島 + X the SKY 98F 觀景台。</em>"
+        desc: "<strong>松島海上纜車</strong>（水晶車廂 ₩17,000 來回）1.6 km 跨海 + 86 m 高，地板透明俯瞰大海。下車接 <strong>松島龍宮雲橋</strong>海上玻璃步道看龍宮岩。約 1.5–2 小時走完，接著去泡 Spa。"
       },
       {
-        time: "19:00 – 22:00",
-        icon: "🚶",
-        name: "飯店 → 民樂海鮮 + 無人機秀（走路 10 min）",
-        transport: "🚶 18:50 從飯店沿廣安海邊路 (광안해변로) 往北走 10 min · 免費<br/>🚕 不想走 Uber 5 min · ₩4k",
+        time: "16:30 – 19:30",
+        icon: "🛀",
+        name: "Centum City Spa Land 汗蒸幕",
+        transport: "🚕 松島 → 新世界 Centum City Spa Land · Uber 30 min · ₩15k<br/>🚇 預算派：96 公車 → 남포 1 號線 (1 호선) → 서면換 2 號線 (2 호선) → Centum City 站 (센텀시티역) 出站即到 · 約 55 min · ₩1,700",
+        lat: 35.16898, lng: 129.13145,
+        gmaps: "https://www.google.com/maps/search/?api=1&query=35.16898,129.13145",
+        badge: "must",
+        transitSteps: [
+          "🎫 16:30 進新世界百貨 B1F Spa Land 售票（₩20,000）",
+          "🛀 16:45–19:00 泡湯放鬆：22 種主題汗蒸房、露天足湯、不老草足浴",
+          "🍲 順便在內部食堂吃米腸湯飯、烤蛋墊胃",
+          "🚕 19:00 出館叫 Uber 回廣安里準備看無人機秀（10 min · ₩9k）"
+        ],
+        desc: "<strong>新世界 Centum City Spa Land</strong>（汗蒸幕✓）₩20,000，22 種主題汗蒸房、露天足湯。下午泡湯放鬆，19:00 前出館 Uber 回廣安里，剛好接晚上的無人機秀。"
+      },
+      {
+        time: "19:30 – 21:30",
+        icon: "🚁",
+        name: "廣安里晚餐（民樂海鮮）+ 21:00 無人機秀",
+        transport: "🚕 Spa Land → 廣安里 Uber 10 min · ₩9k<br/>🚶 到廣安里後沿海邊路走到 民樂魚市場 / 沙灘 · 免費",
         lat: 35.1555583, lng: 129.1238321,
         gmaps: "https://maps.app.goo.gl/2sqWwpmyNqG7c8N39",
         badge: "must",
         transitSteps: [
-          "🚶 18:50 飯店出門，沿廣安海邊路 (광안해변로) 往北走 10 min 到 民樂魚市場",
-          "🍣 19:00–20:30 民樂魚市場吃晚餐：1F 選現撈、2F 上桌切片，+₩10,000 服務費送辣魚湯＋小菜（坐窗邊看大橋）",
+          "🚕 19:15 Spa Land → 廣安里（民樂魚市場 / 沙灘一帶）",
+          "🍣 19:30–20:40 民樂魚市場吃晚餐：1F 選現撈、2F 上桌切片，+₩10,000 服務費送辣魚湯＋小菜（坐窗邊看大橋）",
           "🚶 20:30 走出市場往廣安沙灘移動（步行 5 min）",
           "🌉 20:45 在廣安沙灘佔位（最佳觀賞點：沙灘中央偏左對著廣安大橋）",
           "🚁 21:00 廣安里 M Drone Light Show 10-12 min（記得下午先上官網確認沒被天候取消）",
@@ -1360,74 +2470,46 @@ const TRIP = [
     ],
     extras: [
       {
-        name: "Skyline Luge Busan 釜山店",
-        lat: 35.1940567, lng: 129.2186386,
-        gmaps: "https://maps.app.goo.gl/7bkiuyiJwHYGUdff8",
-        badge: "must",
-        desc: "釜山 기장 / 松亭區的斜坡滑車主題樂園。多種難度滑道 + 高空 SkyRide 纜車。套票 ₩30k 起，含 SkyRide 上山 + Luge 下滑 N 次。"
-      },
-      {
-        name: "松亭海水浴場 (송정해수욕장)",
-        lat: 35.1789, lng: 129.2069,
-        gmaps: "https://www.google.com/maps/search/?api=1&query=35.1789,129.2069",
+        name: "甘川洞文化村",
+        lat: 35.0973904, lng: 129.0105924,
+        gmaps: "https://maps.app.goo.gl/16hfH5FjCqP6KHWaA",
         badge: "view",
-        desc: "Beach Train 終點站，海雲台再過去的安靜沙灘。比海雲台清幽，海邊海鮮餐廳多。"
+        desc: "韓國馬丘比丘，彩色山城聚落 + 小王子打卡點。一早先衝人最少，慢慢爬慢慢拍 2 小時。"
       },
       {
-        name: "海雲台藍線公園 尾浦站",
-        lat: 35.158284, lng: 129.1727672,
-        gmaps: "https://maps.app.goo.gl/ySQbNS4zr25xBbqC9",
-        badge: "must",
-        desc: "Sky Capsule 空中列車與 Beach Train 海邊列車的共同起站。建議出發 Beach Train 往松亭、回程搭 Sky Capsule 從青沙浦回來。"
-      },
-      {
-        name: "Sky Capsule 海雲台 청사포站",
-        lat: 35.1613733, lng: 129.1918758,
-        gmaps: "https://maps.app.goo.gl/3J1nqJKM69AboivY6",
-        badge: "must",
-        desc: "Sky Capsule 終點站。下車就是青沙浦，步行可到紅白燈塔 + Daritdol 玻璃步道。"
-      },
-      {
-        name: "青沙浦 紅白燈塔（踏石觀景台）",
-        lat: 35.1640365, lng: 129.1967173,
-        gmaps: "https://maps.app.goo.gl/twZrz5rgRrE7VNyN6",
-        badge: "view",
-        desc: "青沙浦地標。Daritdol 觀景台是玻璃地板天空步道，免費走在海面上俯瞰大海。"
-      },
-      {
-        name: "Cafe Rooftop 청사포",
-        lat: 35.1611366, lng: 129.1936685,
-        gmaps: "https://maps.app.goo.gl/D2cpMPDwLEdaUJtk6",
+        name: "巨人炸雞（富平市場）",
+        lat: 35.1023409, lng: 129.0261154,
+        gmaps: "https://maps.app.goo.gl/X4VAbmin1pjZ3xXC7",
         badge: "food",
-        desc: "頂樓海景咖啡，可坐一下午。看廣安大橋遠景 + 松島燈塔。"
+        desc: "60 年炸雞老店。堅持用 1.3 公斤以上整雞現炸，皮酥肉嫩。甘川洞下山順路午餐。"
       },
       {
-        name: "古來思魚糕 海雲台店",
-        lat: 35.1625695, lng: 129.1595472,
-        gmaps: "https://maps.app.goo.gl/4Py9Sgg7jqZ4RrKo6",
+        name: "札嘎其海鮮市場",
+        lat: 35.0966339, lng: 129.0307965,
+        gmaps: "https://maps.app.goo.gl/AUNdRDD49z5dp3Et6",
         badge: "food",
-        desc: "釜山三大魚糕之一。現做魚糕串、起司魚糕、魚糕烏龍麵。當午餐剛剛好。"
+        desc: "釜山最大海鮮市場。1F 看活魚、2F 用餐區。海鮮鍋、生魚片現切現吃。甘川洞午餐備選。"
       },
       {
-        name: "海雲台沙灘",
-        lat: 35.1586975, lng: 129.1603842,
-        gmaps: "https://maps.app.goo.gl/zUWXrSrdrkVXA5Yu9",
-        badge: "view",
-        desc: "釜山招牌沙灘，1.5 公里長。週末常有街頭表演。"
+        name: "松島海上纜車站",
+        lat: 35.0763876, lng: 129.0236199,
+        gmaps: "https://maps.app.goo.gl/oBsqVyBYqskmGSu38",
+        badge: "must",
+        desc: "松島海上纜車起站。水晶車廂 ₩17,000 來回，跨海 1.6 km + 86 m 高，地板透明。"
       },
       {
-        name: "冬柏島",
-        lat: 35.1545312, lng: 129.1525517,
-        gmaps: "https://maps.app.goo.gl/UgzTsXvS5Syba14i8",
+        name: "松島龍宮雲橋",
+        lat: 35.061897, lng: 129.022214,
+        gmaps: "https://maps.app.goo.gl/GX8r1yLeYfBnY1BC9",
         badge: "view",
-        desc: "海雲台西側小島步道，繞一圈約 1 小時。看 APEC 之家、海邊岩石、海濱木棧道。"
+        desc: "海邊玻璃步道，走在海上看龍宮岩。可從纜車南端站連接過去。"
       },
       {
-        name: "X the SKY 98F 觀景台",
-        lat: 35.1594862, lng: 129.1701677,
-        gmaps: "https://maps.app.goo.gl/hHbeHnDDvSpzsUWV7",
-        badge: "view",
-        desc: "LCT 觀景台 411 m 高，全韓第二高建築。看夕陽中的廣安大橋與整個釜山。₩29,000。建議 16:30 上去。"
+        name: "新世界 Centum City Spa Land",
+        lat: 35.16898, lng: 129.13145,
+        gmaps: "https://www.google.com/maps/search/?api=1&query=35.16898,129.13145",
+        badge: "must",
+        desc: "₩20,000，22 種主題汗蒸房、露天足湯、不老草足浴。下午泡湯放鬆，19:00 前出館回廣安里接無人機秀。"
       },
       {
         name: "民樂魚市場",
@@ -1442,77 +2524,115 @@ const TRIP = [
         gmaps: "https://maps.app.goo.gl/EHbMBYmgb13GX2JH8",
         badge: "must",
         desc: "週六晚 19:00 + 21:00 各一場，1,000 台無人機在廣安大橋上空 10-12 分鐘演出。沙灘上是最佳觀賞位置。"
+      },
+      {
+        name: "The Tilt 23F 廣安里夜景酒吧",
+        lat: 35.15303, lng: 129.11947,
+        gmaps: "https://www.google.com/maps/search/?api=1&query=35.15303,129.11947",
+        badge: "food",
+        desc: "23 樓無敵廣安大橋夜景。看完無人機秀想再喝一杯可上來收尾。"
       }
     ]
   },
   {
     day: 2,
     date: "10/25 (日)",
-    title: "影島深度日 + 海女村午餐",
-    sub: "白險灘 → 海女村 → 太宗台 → 西面烤肉",
+    title: "影島慢遊 + 海女村午餐",
+    sub: "ARTE → 海女村 → Footbath Cafe → 白淺灘夕陽",
     stops: [
       {
-        time: "10:30 – 12:00",
-        icon: "🚕",
-        name: "飯店 → 影島·白險灘 · Uber 30 min · ₩15k",
-        transport: "🚕 廣安里 → 影島西邊白險灘文化村 · 推薦：影島沒地鐵、要轉公車最少 70 min，Uber 比較實際<br/>🚇 預算派：광안 2 號線 (2 호선) → 자갈치 1 號線 (1 호선) → 7/8/9 路公車 · 約 70 min · ₩2,500",
-        lat: 35.0782798, lng: 129.0453198,
-        gmaps: "https://maps.app.goo.gl/keeYEHdaP1vVUMT87",
-        badge: "must",
-        transitSteps: [
-          "🚪 10:00 飯店門口開 Uber",
-          "📱 目的地：白險灘文化村 (흰여울문화마을)",
-          "🚕 30 min 車程沿海岸往西南，車資 ₩15k",
-          "🚶 10:30 抵達白險灘文化村入口（韓版聖托里尼）",
-          "📷 沿白色階梯村慢慢走 1.5h（電影《辯護人》拍攝地、海岸線小聚落）",
-          "🚕 12:00 結束後叫 Uber → 海女村（跨影島東邊，12 min · ₩8k）"
-        ],
-        desc: "<strong>白險灘文化村</strong>（影島✓ 韓版聖托里尼，電影《辯護人》拍攝地，白色階梯村落沿海岸線），慢慢走 1.5 小時。然後 Uber 約 15 分跨島到海女村午餐。"
-      },
-      {
-        time: "12:30 – 17:30",
+        time: "10:00 – 12:00",
         icon: "🎨",
-        name: "海女村午餐 → THRILL ON THE MUG → ARTE MUSEUM",
-        transport: "🍣 海女村午餐 (1.5h)<br/>🚕 海女村 → THRILL ON THE MUG (Uber 8 min · ₩5k)<br/>🚕 THRILL → ARTE MUSEUM Busan (Uber 8 min · ₩5k)",
+        name: "一早先衝 ARTE MUSEUM Busan",
+        transport: "🚕 飯店 → 影島 ARTE MUSEUM · Uber 25 min · ₩13k（一早出發避開人潮）",
         lat: 35.0870682, lng: 129.076373,
         gmaps: "https://maps.app.goo.gl/MU3TUx3p9x4cFN8T6",
         badge: "must",
         transitSteps: [
-          "🍣 12:30–14:00 海女村午餐：海膽飯捲、海鮮拉麵、活鮑魚刺身，海景第一排",
-          "🚕 14:00 海女村 → THRILL ON THE MUG (Uber 8 min · ₩5k)",
-          "📷 14:15–15:15 THRILL ON THE MUG：影島海邊「巨大馬克杯」打卡點 + 咖啡 (網美必拍)",
-          "🚕 15:15 THRILL → ARTE MUSEUM Busan (Uber 8 min · ₩5k)",
-          "🎫 15:30 ARTE MUSEUM 售票 (₩30,000 全票)",
-          "🎨 15:30–17:30 ARTE MUSEUM 沉浸式數位藝術展 (d'strict 第二館，2h 體驗)",
-          "🚕 17:30 ARTE MUSEUM → 西面 83 해치 (Uber 25 min · ₩12k)"
+          "🚪 09:30 飯店叫 Uber → 影島 ARTE MUSEUM Busan（25 min · ₩13k）",
+          "🎫 10:00 開館先衝，售票 ₩30,000（建議官網 / Klook 先預約指定時段）",
+          "🎨 10:00–12:00 沉浸式數位藝術展（d'strict 第二館，一早人最少、拍照最舒服）",
+          "🚕 12:00 出發往太宗台旁海女村午餐（Uber 12 min · ₩8k）"
         ],
-        desc: "下午影島藝術線：<strong>THRILL ON THE MUG</strong> 海邊巨大馬克杯打卡點 (網美必拍 + 海景咖啡) + <strong>ARTE MUSEUM Busan</strong> 沉浸式數位藝術展 (d'strict 公司第二館，2h 沉浸體驗，₩30,000)。<em>原本的 太宗台 DANUBI 列車 + 三進魚糕本店改為加碼選項（小圓點），有興趣可挑一個塞進來。</em>"
+        desc: "一早先衝 <strong>ARTE MUSEUM Busan</strong> 沉浸式數位藝術展（d'strict 公司第二館，₩30,000，約 2h）。開館就到人最少、光影拍照最舒服。<em>提醒：一早去看不到天黑後的光雕感，但換來清幽與整天順路動線。</em>"
       },
       {
-        time: "19:00 – 22:00",
-        icon: "🚕",
-        name: "影島 → 西面·83 해치 · Uber 30 min · ₩13k",
-        transport: "🚕 太宗台 → 西面 83 해치烤肉店 · 推薦：吃完飽飽不用轉車<br/>🚇 預算派：太宗 → 8/30 公車 → 南浦 1 號線 (1 호선) → 西面 · 約 50 min · ₩1,700",
+        time: "12:30 – 14:00",
+        icon: "🍣",
+        name: "太宗台旁 影島海女村午餐",
+        transport: "🚕 ARTE MUSEUM → 影島海女村 · Uber 12 min · ₩8k",
+        lat: 35.05247, lng: 129.092796,
+        gmaps: "https://maps.app.goo.gl/9EfKJ3rgkieRevPv5",
+        badge: "food",
+        transitSteps: [
+          "🍣 12:30–14:00 海女村露天大排檔午餐：海女現撈海膽飯捲、海鮮拉麵、活鮑魚刺身，海景第一排",
+          "🌊 想散步可順遊旁邊 太宗台（免費入園、斷崖海景；DANUBI 小火車今年多次故障停駛，建議用走的）",
+          "🚕 14:00 出發往影島西邊 Footbath Cafe View（Uber 15 min · ₩8k）"
+        ],
+        desc: "<strong>影島海女村</strong>露天大排檔（無需預訂，中午直接去），海女現撈海膽飯捲、海鮮拉麵、活鮑魚刺身，海景第一排。<em>就在太宗台入口旁，想散步可順遊太宗台（免費，斷崖燈塔海景；DANUBI 小火車今年多次故障停駛，建議用走的）。</em>"
+      },
+      {
+        time: "14:15 – 15:45",
+        icon: "☕",
+        name: "Footbath Cafe View 足浴海景咖啡",
+        transport: "🚕 海女村 → Footbath Cafe View · Uber 15 min · ₩8k",
+        lat: 35.0765881, lng: 129.0471526,
+        gmaps: "https://www.google.com/maps/search/?api=1&query=35.0765881,129.0471526",
+        badge: "view",
+        transitSteps: [
+          "☕ 14:15–15:45 Footbath Cafe View：邊泡足浴邊看海放空，影島西岸海景第一排",
+          "🚶 15:45 沿海岸散步 5-10 min 往 白淺灘文化村（就在附近）"
+        ],
+        desc: "<strong>Footbath Cafe View</strong> 影島西岸的足浴海景咖啡，泡著溫熱足湯看海放空。就在白淺灘旁邊，喝完散步過去剛好接傍晚夕陽。"
+      },
+      {
+        time: "15:45 – 17:30",
+        icon: "🌅",
+        name: "白淺灘文化村 + 絕影海岸散步路（夕陽）",
+        transport: "🚶 Footbath Cafe → 白淺灘文化村 步行 5-10 min · 免費",
+        lat: 35.0782798, lng: 129.0453198,
+        gmaps: "https://maps.app.goo.gl/keeYEHdaP1vVUMT87",
+        badge: "view",
+        transitSteps: [
+          "🚶 15:45 白淺灘文化村（韓版聖托里尼，電影《辯護人》拍攝地）白色階梯村慢慢逛",
+          "🌊 順走 絕影海岸散步路（절영해안산책로）沿海棧道看海",
+          "🌅 17:00 前後在海岸邊看夕陽收尾",
+          "🚕 17:30 出發往西面 83 해치晚餐（Uber 過影島大橋 25 min · ₩12k）"
+        ],
+        desc: "<strong>白淺灘文化村</strong>（韓版聖托里尼，白色階梯村落沿海岸線）+ <strong>絕影海岸散步路</strong>沿海棧道，傍晚人潮退了、光線最美，海邊看夕陽收尾。<em>提醒：週日白天人多，這天把它放傍晚剛好避開尖峰。</em>"
+      },
+      {
+        time: "18:00 – 21:30",
+        icon: "🍖",
+        name: "西面 83 해치 烤肉晚餐",
+        transport: "🚕 白淺灘 → 西面 83 해치烤肉店 · Uber 過影島大橋 25 min · ₩12k<br/>🚇 預算派：南浦 1 號線 (1 호선) → 西面 · 約 30 min · ₩1,500",
         lat: 35.1580029, lng: 129.0611124,
         gmaps: "https://maps.app.goo.gl/mRLYdcHJq6tSihYC8",
         badge: "must",
         transitSteps: [
-          "🚕 17:30 三進魚糕 / 太宗台 → 西面 83 해치（30 min · ₩13k，經 影島大橋 (영도대교)稍塞）",
-          "🍖 18:15 抵達 83 해치 西面店（建議先 KakaoTalk 訂位）",
-          "🍷 19:00–21:00 烤肉晚餐（熟成豬肉 (돼지숙성육) 厚切五花、特上肉、人均 NT$450）",
-          "🍢 21:00–22:00 飯後散步 西面布帳馬車街配燒酒，或去 24h 水營本家解膩",
-          "🚇 22:30 西面站 (서면역) 2 號線 (2 호선) → 廣安站 (광안역)（10 min · ₩1,500）+ 步行 6 min 回飯店"
+          "🚕 17:30 白淺灘 → 西面 83 해치（25 min · ₩12k，經影島大橋）",
+          "🍖 18:00 抵達 83 해치 西面店（建議先 CatchTable 或 KakaoTalk 訂位）",
+          "🍷 18:30–20:30 烤肉晚餐（熟成豬肉 (돼지숙성육) 厚切五花、特上肉，人均 NT$450）",
+          "🍢 20:30–21:30 西面布帳馬車街配燒酒，或 24h 水營本家解膩",
+          "🚇 21:30 西面站 (서면역) 2 號線 (2 호선) → 廣安站（10 min · ₩1,500）+ 步行回飯店"
         ],
-        desc: "<strong>83 해치 西面店</strong>（韓式烤肉✓）釜山當紅烤肉店，肉質鮮厚、CP 超高（人均 NT$450），在地人排隊店，建議 18:30 前到或先 KakaoTalk 訂位。飯後可走 <strong>西面布帳馬車街</strong>夜市攤車配燒酒當宵夜，或去 24h <strong>水營本家</strong>吃湯飯解膩。"
+        desc: "<strong>83 해치 西面店</strong>（韓式烤肉✓）釜山當紅烤肉店，肉質鮮厚、CP 超高（人均 NT$450），在地人排隊店，建議先訂位。飯後可走 <strong>西面布帳馬車街</strong>夜市攤車配燒酒，或去 24h <strong>水營本家</strong>吃湯飯解膩。"
       }
     ],
     extras: [
       {
-        name: "白險灘文化村（Huinnyeoul）",
+        name: "白淺灘文化村（Huinnyeoul）",
         lat: 35.0782798, lng: 129.0453198,
         gmaps: "https://maps.app.goo.gl/keeYEHdaP1vVUMT87",
         badge: "view",
-        desc: "影島西邊韓版聖托里尼。沿海岸線白色階梯村落，咖啡店、藝廊密集。電影《辯護人》拍攝地。"
+        desc: "影島西邊韓版聖托里尼。沿海岸線白色階梯村落，咖啡店、藝廊密集。電影《辯護人》拍攝地。傍晚看夕陽最美。"
+      },
+      {
+        name: "Footbath Cafe View（足浴海景咖啡）",
+        lat: 35.0765881, lng: 129.0471526,
+        gmaps: "https://www.google.com/maps/search/?api=1&query=35.0765881,129.0471526",
+        badge: "view",
+        desc: "影島西岸足浴海景咖啡，就在白淺灘旁。泡足湯看海放空，喝完散步接白淺灘夕陽。"
       },
       {
         name: "海女村（太宗台旁）",
@@ -1568,115 +2688,137 @@ const TRIP = [
   {
     day: 3,
     date: "10/26 (一)",
-    title: "甘川洞 + 松島水晶纜車 + Spa Land",
-    sub: "彩色山城 → 海上纜車 → 汗蒸幕",
+    title: "海雲台列車日（平日人少）",
+    sub: "Beach Train × Sky Capsule × Busan X the SKY",
+    route: [
+      [35.1507323, 129.1159064],
+      [35.158284, 129.1727672],
+      [35.1789, 129.2069],
+      [35.1613733, 129.1918758],
+      [35.158284, 129.1727672],
+      [35.1594862, 129.1701677],
+      [35.1507323, 129.1159064]
+    ],
     stops: [
       {
-        time: "10:30 – 14:00",
-        icon: "🚇",
-        name: "飯店 → 甘川洞 · 地鐵 50 min · ₩2,000",
-        transport: "🚇 광안 2 號線 (2 호선) → 서면 換 1 號線 (1 호선) → 土城站 (토성역) + 走 5 min 換 마을 2 (社區小巴) 上山 · 約 50 min · ₩2,000<br/>🚕 懶人選擇 Uber 30 min · ₩13k 直達",
-        lat: 35.0973904, lng: 129.0105924,
-        gmaps: "https://maps.app.goo.gl/16hfH5FjCqP6KHWaA",
+        time: "10:00 – 13:30",
+        icon: "🚞",
+        name: "海雲台 Beach Train 海岸列車（尾浦→松亭）",
+        transport: "🚇 飯店 → 廣安站 → 海雲台站 → 走 15 min 到 尾浦站<br/>🚞 尾浦 → Beach Train 海邊列車 東向 30 min → 松亭海水浴場 (송정해수욕장) · ₩7,000",
+        lat: 35.1789, lng: 129.2069,
+        gmaps: "https://www.google.com/maps/search/?api=1&query=35.1789,129.2069",
         badge: "must",
         transitSteps: [
-          "🚶 09:45 飯店出門往北走 10 min 到 廣安站 (광안역) 3 號出口 (3번 출구)",
-          "🚇 2 號線 (2 호선)往양산方向 → 西面站 (서면역)（25 min · ₩1,500），於서면換 1 號線 (1 호선)",
-          "🚇 1 號線 (1 호선)往多大浦海水浴場方向 → 土城站 (토성역) 6 號出口 (6번 출구)（8 min）",
-          "🚌 出站走 5 min 到公車站 → 마을 2 / 2-2 社區小巴（10-15 min 一班）",
-          "🚌 小巴上山 10 min 到 甘川洞文化村 (감천문화마을) 정류장",
-          "🎨 11:30–13:30 慢慢爬慢慢拍：彩色山城、小王子打卡點、裝置藝術",
-          "🍗 13:30 下山叫 Uber 到 富平市場 巨人炸雞午餐（5 min · ₩4k）"
+          "🚶 10:00 飯店出門往北走 10 min 到 廣安站 (광안역) 3 號出口 (3번 출구)",
+          "🚇 2 號線 (2 호선) 往萇山方向 (綠線)，15 min · 7 站 · ₩1,500 → 海雲台站 (해운대역)",
+          "🚶 海雲台站 5 號出口 (5번 출구) 沿 賞月路 (달맞이길) 上坡走 15 min → 尾浦站 (미포정거장)",
+          "🎫 10:45 尾浦站搭 Beach Train 海邊列車 (單程 ₩7,000，開放式車廂)",
+          "🚞 沿海岸 4 站 30 min (途經 청사포 + 구덕포) → 松亭海水浴場站 (송정해수욕장)",
+          "🏖 11:30–13:30 松亭海水浴場散步、海邊咖啡，海鮮餐廳吃午餐"
         ],
-        desc: "<strong>甘川洞文化村</strong>韓國馬丘比丘，彩色山城聚落 + 小王子打卡點，慢慢爬慢慢拍 2 小時。下山到富平 / 札嘎其區午餐：<strong>巨人炸雞</strong>（60 年老店整雞現炸）或 <strong>札嘎其海鮮市場</strong>海鮮鍋。<em>韓牛備案：일신명품한우 1F 정육 + 2F 식당，但 10/26 週一公休</em>。"
+        desc: "<strong>Beach Train 海邊列車</strong> 從尾浦一路坐到松亭，沿路看海岸線。松亭比海雲台清幽，散步、海邊咖啡、海鮮午餐都很悠閒。平日人少不用人擠人。"
       },
       {
-        time: "15:00 – 17:00",
-        icon: "🚕",
-        name: "甘川洞 → 松島·海上纜車 · Uber 15 min · ₩6k",
-        transport: "🚕 富平 / 札嘎其 → 松島海上纜車站 · 推薦：直達省事<br/>🚌 預算派：札嘎其站 (자갈치역) → 86 / 96 公車到松島 · 約 30 min · ₩1,500",
-        lat: 35.0763876, lng: 129.0236199,
-        gmaps: "https://maps.app.goo.gl/oBsqVyBYqskmGSu38",
+        time: "13:30 – 17:00",
+        icon: "🚞",
+        name: "回程 · Beach Train + Sky Capsule（Sky Capsule ✓ KKday 已買）",
+        transport: "🚞 松亭 → Beach Train 西返 → 青沙浦 (15 min · ₩7,000)<br/>🚞 青沙浦 → Sky Capsule 空中列車 → 尾浦 (30 min · ₩30,000，提早 1 週訂位)<br/>🚇 海雲台站 → 廣安站 (2 號線 13 min · ₩1,500)",
+        lat: 35.1613733, lng: 129.1918758,
+        gmaps: "https://maps.app.goo.gl/3J1nqJKM69AboivY6",
         badge: "must",
         transitSteps: [
-          "🚕 14:30 富平市場 / 巨人炸雞 → 松島海上纜車（海灣站 (베이정거장)）（15 min · ₩6k）",
-          "🎫 14:45 售票口買水晶車廂來回票 ₩17,000",
-          "🚡 15:00 搭乘水晶車廂跨海 1.6 km、86 m 高（地板透明俯瞰）→ 松島海水浴場 (송도해수욕장) 정거장",
-          "🌉 15:20 下車走 龍宮雲橋 海上玻璃步道（看龍宮岩、可拍照 30 min）",
-          "🚡 16:10 搭纜車回 海灣站 (베이정거장)",
-          "🚶 16:30 在松島海邊散步或喝杯咖啡 30 min"
+          "🚞 13:30 松亭海邊逛完 → 松亭站搭 Beach Train 西返",
+          "🚞 13:45 松亭 → Beach Train 西返 → 青沙浦站 (청사포정거장) 15 min · ₩7,000",
+          "🚶 14:00–15:00 青沙浦散策：紅白燈塔 + Daritdol 玻璃步道 + Cafe Rooftop 海景咖啡",
+          "🎫 15:00 青沙浦站搭 Sky Capsule (4 人膠囊空中軌道，提早 1 週訂位)",
+          "🚞 Sky Capsule 30 min 沿海岸 → 尾浦站",
+          "🚶 15:30 尾浦走 15 min → 海雲台站 5 號出口 (5번 출구)",
+          "🚇 2 號線 (2 호선) 往양산方向 5 站 13 min → 廣安站",
+          "🏨 16:30 回飯店休息"
         ],
-        desc: "<strong>松島海上纜車</strong>（水晶車廂 ₩17,000 來回）1.6 km 跨海 + 86 m 高，地板透明俯瞰大海。下車後接 <strong>松島龍宮雲橋</strong>海上玻璃步道，看龍宮岩。約 2 小時走完。"
+        desc: "回程兩種列車一次收：<strong>Beach Train</strong> 從松亭西返青沙浦 (15 min)，下車慢慢走 <strong>紅白燈塔 + Daritdol 玻璃步道</strong>，順便 <strong>Cafe Rooftop</strong> 看海喝咖啡。然後 <strong>Sky Capsule</strong> 空中列車 4 人膠囊高架軌道 30 min 回尾浦。平日下午人潮少，膠囊不用久候。"
       },
       {
-        time: "17:30 – 22:00",
-        icon: "🚕",
-        name: "松島 → Centum City Spa Land · Uber 30 min · ₩15k",
-        transport: "🚕 松島 → 新世界 Centum City Spa Land · 推薦：跨城市快 + 不用拖一身泳具<br/>🚇 預算派：96 公車 → 남포 1 號線 (1 호선) → 서면換 2 號線 (2 호선) → Centum City 站 (센텀시티역)（出站即 Spa Land）· 約 55 min · ₩1,700",
-        lat: 35.16898, lng: 129.13145,
-        gmaps: "https://www.google.com/maps/search/?api=1&query=35.16898,129.13145",
+        time: "17:30 – 19:30",
+        icon: "🌆",
+        name: "Busan X the SKY 98F 觀景台（夕陽＋夜景）",
+        transport: "🚶 尾浦 / 海雲台站 → LCT Busan X the SKY · 步行 10-15 min<br/>🚕 懶得走 Uber 5 min · ₩4k",
+        lat: 35.1594862, lng: 129.1701677,
+        gmaps: "https://maps.app.goo.gl/hHbeHnDDvSpzsUWV7",
         badge: "must",
         transitSteps: [
-          "🚕 17:00 松島 → 新世界 Centum City（30 min · ₩15k，跨城市最快）",
-          "🎫 17:30 進新世界百貨 B1F Spa Land 售票（₩20,000 / 4 小時）",
-          "🛀 17:45–21:30 Spa Land 4 小時：22 種主題汗蒸房、露天足湯、不老草足浴",
-          "🍲 中間在內部食堂吃米腸湯飯、烤蛋當晚餐",
-          "🚕 21:30 出館叫 Uber 回廣安리（10 min · ₩9k）",
-          "🍸 22:00 The Tilt 23F 喝一杯威士忌看廣安大橋夜景做收尾",
-          "🚶 22:30 走 5 min 回飯店收行李"
+          "🚶 17:00 尾浦 / 海雲台 → LCT Busan X the SKY（步行 10-15 min 或 Uber）",
+          "🎫 17:30 1F 售票櫃檯用 BIG5 Pass 換實體登塔門票（不用預約）",
+          "🌇 17:45–19:00 98F 觀景台：卡日落時段上去，白天、夕陽、夜景一次看",
+          "☕ 順便逛「世界最高星巴克」100F，拍廣安大橋與海雲台夜景",
+          "🚕 19:15 Uber 回廣安里飯店（約 ₩9k）"
         ],
-        desc: "<strong>新世界 Centum City Spa Land</strong>（汗蒸幕✓）₩20,000/4 小時，22 種主題汗蒸房、露天足湯、按摩。內部食堂可吃米腸湯飯當晚餐。21:30 Uber 回廣安里（₩9k），<strong>The Tilt 23F</strong> 喝一杯威士忌看廣安大橋夜景做釜山收尾。"
+        desc: "<strong>Busan X the SKY</strong> 海雲台 LCT 98F 觀景台（411 m，全韓第二高），BIG5 Pass 免費換票（原價 ₩88,000 超划算）。卡日落前上去，白天、夕陽、夜景一次收，還有「世界最高星巴克」。看完 Uber 回廣安里做收尾。"
       }
     ],
     extras: [
       {
-        name: "甘川洞文化村",
-        lat: 35.0973904, lng: 129.0105924,
-        gmaps: "https://maps.app.goo.gl/16hfH5FjCqP6KHWaA",
+        name: "松亭海水浴場 (송정해수욕장)",
+        lat: 35.1789, lng: 129.2069,
+        gmaps: "https://www.google.com/maps/search/?api=1&query=35.1789,129.2069",
         badge: "view",
-        desc: "韓國馬丘比丘，彩色山城聚落 + 小王子打卡點。慢慢爬慢慢拍 2 小時。"
+        desc: "Beach Train 終點站，海雲台再過去的安靜沙灘。比海雲台清幽，海邊海鮮餐廳多。"
       },
       {
-        name: "巨人炸雞（富平市場）",
-        lat: 35.1023409, lng: 129.0261154,
-        gmaps: "https://maps.app.goo.gl/X4VAbmin1pjZ3xXC7",
-        badge: "food",
-        desc: "60 年炸雞老店。堅持用 1.3 公斤以上整雞現炸，皮酥肉嫩。甘川洞下山順路午餐。"
-      },
-      {
-        name: "札嘎其海鮮市場",
-        lat: 35.0966339, lng: 129.0307965,
-        gmaps: "https://maps.app.goo.gl/AUNdRDD49z5dp3Et6",
-        badge: "food",
-        desc: "釜山最大海鮮市場。1F 看活魚、2F 用餐區。海鮮鍋、生魚片現切現吃。"
-      },
-      {
-        name: "일신명품한우（韓牛 · 週一公休）",
-        lat: 35.1019735, lng: 129.0256479,
-        gmaps: "https://maps.app.goo.gl/PvpqH2G1QDtkcApp6",
-        badge: "food",
-        desc: "富平市場附近韓牛店，1F 정육 + 2F 식당，「肉嫩到入口即化」評語滿滿。10/26 週一公休，若改去其他天可加進來。"
-      },
-      {
-        name: "松島海上纜車站",
-        lat: 35.0763876, lng: 129.0236199,
-        gmaps: "https://maps.app.goo.gl/oBsqVyBYqskmGSu38",
+        name: "海雲台藍線公園 尾浦站",
+        lat: 35.158284, lng: 129.1727672,
+        gmaps: "https://maps.app.goo.gl/ySQbNS4zr25xBbqC9",
         badge: "must",
-        desc: "松島海上纜車起站。水晶車廂 ₩17,000 來回，跨海 1.6 km + 86 m 高，地板透明。"
+        desc: "Sky Capsule 空中列車與 Beach Train 海邊列車的共同起站。建議出發 Beach Train 往松亭、回程搭 Sky Capsule 從青沙浦回來。"
       },
       {
-        name: "松島龍宮雲橋",
-        lat: 35.061897, lng: 129.022214,
-        gmaps: "https://maps.app.goo.gl/GX8r1yLeYfBnY1BC9",
+        name: "Sky Capsule 海雲台 청사포站",
+        lat: 35.1613733, lng: 129.1918758,
+        gmaps: "https://maps.app.goo.gl/3J1nqJKM69AboivY6",
+        badge: "must",
+        desc: "Sky Capsule 終點站。下車就是青沙浦，步行可到紅白燈塔 + Daritdol 玻璃步道。"
+      },
+      {
+        name: "青沙浦 紅白燈塔（踏石觀景台）",
+        lat: 35.1640365, lng: 129.1967173,
+        gmaps: "https://maps.app.goo.gl/twZrz5rgRrE7VNyN6",
         badge: "view",
-        desc: "海邊玻璃步道，走在海上看龍宮岩。可從纜車南端站連接過去。"
+        desc: "青沙浦地標。Daritdol 觀景台是玻璃地板天空步道，免費走在海面上俯瞰大海。"
       },
       {
-        name: "The Tilt 23F 廣安里夜景酒吧",
-        lat: 35.15303, lng: 129.11947,
-        gmaps: "https://www.google.com/maps/search/?api=1&query=35.15303,129.11947",
+        name: "Cafe Rooftop 청사포",
+        lat: 35.1611366, lng: 129.1936685,
+        gmaps: "https://maps.app.goo.gl/D2cpMPDwLEdaUJtk6",
         badge: "food",
-        desc: "23 樓無敵廣安大橋夜景。Spa Land 後最後一晚在釜山做收尾，搭一杯威士忌或調酒。"
+        desc: "頂樓海景咖啡，可坐一下午。看廣安大橋遠景 + 松島燈塔。"
+      },
+      {
+        name: "古來思魚糕 海雲台店",
+        lat: 35.1625695, lng: 129.1595472,
+        gmaps: "https://maps.app.goo.gl/4Py9Sgg7jqZ4RrKo6",
+        badge: "food",
+        desc: "釜山三大魚糕之一。現做魚糕串、起司魚糕、魚糕烏龍麵。當午餐剛剛好。"
+      },
+      {
+        name: "海雲台沙灘",
+        lat: 35.1586975, lng: 129.1603842,
+        gmaps: "https://maps.app.goo.gl/zUWXrSrdrkVXA5Yu9",
+        badge: "view",
+        desc: "釜山招牌沙灘，1.5 公里長。平日清幽好走。"
+      },
+      {
+        name: "冬柏島",
+        lat: 35.1545312, lng: 129.1525517,
+        gmaps: "https://maps.app.goo.gl/UgzTsXvS5Syba14i8",
+        badge: "view",
+        desc: "海雲台西側小島步道，繞一圈約 1 小時。看 APEC 之家、海邊岩石、海濱木棧道。"
+      },
+      {
+        name: "Busan X the SKY 98F 觀景台",
+        lat: 35.1594862, lng: 129.1701677,
+        gmaps: "https://maps.app.goo.gl/hHbeHnDDvSpzsUWV7",
+        badge: "must",
+        desc: "LCT 觀景台 411 m 高，全韓第二高建築。BIG5 Pass 換票（原價 ₩88,000）。已排入 10/26 傍晚，卡日落看夕陽＋夜景。"
       }
     ]
   },
@@ -1709,6 +2851,74 @@ const TRIP = [
 ];
 
 // ============== Map Init ==============
+// ============== Build Timeline ==============
+const timeline = document.getElementById('timeline');
+TRIP.forEach(dayObj => {
+  const card = document.createElement('article');
+  card.className = 'day-card';
+  card.dataset.day = dayObj.day;
+  card.id = `day-${dayObj.day}`;
+
+  const stopsHtml = dayObj.stops.map((s, idx) => {
+    const badgeHtml = s.badge
+      ? `<span class="badge ${s.badge}">${
+          s.badge === 'must' ? '★ 主題收集' :
+          s.badge === 'food' ? '🍽 美食' :
+          s.badge === 'transport' ? '🚕 交通' : ''
+        }</span>`
+      : '';
+    const iconLabel = s.icon || (idx + 1);
+    const transportHtml = s.transport ? `<div class="stop-transport">${s.transport}</div>` : '';
+    const transitStepsHtml = s.transitSteps && s.transitSteps.length > 0
+      ? `<details class="stop-transit-detail" open><summary>🗺 完整步驟（怎麼去 · 去哪 · 吃什麼）· ${s.transitSteps.length} 步</summary><ol>${s.transitSteps.map(step => `<li>${step}</li>`).join('')}</ol></details>`
+      : '';
+    const gmapsUrl = s.gmaps || `https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}`;
+    const extrasForStop = (dayObj.extras || []).filter(e => {
+      const distLat = Math.abs(e.lat - s.lat);
+      const distLng = Math.abs(e.lng - s.lng);
+      return distLat < 0.03 && distLng < 0.03;
+    });
+    const extrasHtml = extrasForStop.length > 0
+      ? `<div class="stop-extras"><div class="stop-extras-label">🍴 周邊景點 / 餐廳</div>${
+          extrasForStop.map(e => `<a href="${e.gmaps || `https://www.google.com/maps/search/?api=1&query=${e.lat},${e.lng}`}" target="_blank" rel="noopener" class="extra-chip"><span class="extra-chip-dot day-${dayObj.day}"></span>${e.name}</a>`).join('')
+        }</div>`
+      : '';
+    return `
+      <div class="stop">
+        <div class="stop-time">${s.time}<small>STOP ${idx+1}</small></div>
+        <div class="stop-body">
+          <div class="stop-name">
+            <span class="stop-icon day-${dayObj.day}">${iconLabel}</span>${s.name}
+            <span class="stop-badges">${badgeHtml}</span>
+          </div>
+          ${transportHtml}
+          ${transitStepsHtml}
+          <div class="stop-desc">${s.desc}</div>
+          ${extrasHtml}
+          <div class="stop-meta">📍 <a href="${gmapsUrl}" target="_blank" rel="noopener">在 Google 地圖打開</a></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  card.innerHTML = `
+    <div class="day-header">
+      <div class="day-header-meta">Day ${dayObj.day} · ${dayObj.date}</div>
+      <h3>${dayObj.title}</h3>
+      <div class="day-header-sub">${dayObj.sub}</div>
+    </div>
+    <div class="day-body">
+      <div class="stops">${stopsHtml}</div>
+    </div>
+  `;
+  timeline.appendChild(card);
+});
+
+
+if (typeof L === 'undefined') {
+  const ms = document.getElementById('map-section'); if (ms) ms.hidden = true;
+  throw new Error('Leaflet not loaded; map skipped');
+}
 const dayColors = {
   0: getComputedStyle(document.documentElement).getPropertyValue('--day-0').trim(),
   1: getComputedStyle(document.documentElement).getPropertyValue('--day-1').trim(),
@@ -1915,69 +3125,6 @@ document.querySelectorAll('.day-chip').forEach(chip => {
     chip.classList.add('active');
     showDays(chip.dataset.day);
   });
-});
-
-// ============== Build Timeline ==============
-const timeline = document.getElementById('timeline');
-TRIP.forEach(dayObj => {
-  const card = document.createElement('article');
-  card.className = 'day-card';
-  card.dataset.day = dayObj.day;
-  card.id = `day-${dayObj.day}`;
-
-  const stopsHtml = dayObj.stops.map((s, idx) => {
-    const badgeHtml = s.badge
-      ? `<span class="badge ${s.badge}">${
-          s.badge === 'must' ? '★ 主題收集' :
-          s.badge === 'food' ? '🍽 美食' :
-          s.badge === 'transport' ? '🚕 交通' : ''
-        }</span>`
-      : '';
-    const iconLabel = s.icon || (idx + 1);
-    const transportHtml = s.transport ? `<div class="stop-transport">${s.transport}</div>` : '';
-    const transitStepsHtml = s.transitSteps && s.transitSteps.length > 0
-      ? `<details class="stop-transit-detail" open><summary>🗺 完整步驟（怎麼去 · 去哪 · 吃什麼）· ${s.transitSteps.length} 步</summary><ol>${s.transitSteps.map(step => `<li>${step}</li>`).join('')}</ol></details>`
-      : '';
-    const gmapsUrl = s.gmaps || `https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}`;
-    const extrasForStop = (dayObj.extras || []).filter(e => {
-      const distLat = Math.abs(e.lat - s.lat);
-      const distLng = Math.abs(e.lng - s.lng);
-      return distLat < 0.03 && distLng < 0.03;
-    });
-    const extrasHtml = extrasForStop.length > 0
-      ? `<div class="stop-extras"><div class="stop-extras-label">🍴 周邊景點 / 餐廳</div>${
-          extrasForStop.map(e => `<a href="${e.gmaps || `https://www.google.com/maps/search/?api=1&query=${e.lat},${e.lng}`}" target="_blank" rel="noopener" class="extra-chip"><span class="extra-chip-dot day-${dayObj.day}"></span>${e.name}</a>`).join('')
-        }</div>`
-      : '';
-    return `
-      <div class="stop">
-        <div class="stop-time">${s.time}<small>STOP ${idx+1}</small></div>
-        <div class="stop-body">
-          <div class="stop-name">
-            <span class="stop-icon day-${dayObj.day}">${iconLabel}</span>${s.name}
-            <span class="stop-badges">${badgeHtml}</span>
-          </div>
-          ${transportHtml}
-          ${transitStepsHtml}
-          <div class="stop-desc">${s.desc}</div>
-          ${extrasHtml}
-          <div class="stop-meta">📍 <a href="${gmapsUrl}" target="_blank" rel="noopener">在 Google 地圖打開</a></div>
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  card.innerHTML = `
-    <div class="day-header">
-      <div class="day-header-meta">Day ${dayObj.day} · ${dayObj.date}</div>
-      <h3>${dayObj.title}</h3>
-      <div class="day-header-sub">${dayObj.sub}</div>
-    </div>
-    <div class="day-body">
-      <div class="stops">${stopsHtml}</div>
-    </div>
-  `;
-  timeline.appendChild(card);
 });
 
 // ============== Smooth scroll hash links update day selector ==============
